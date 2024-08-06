@@ -1,0 +1,52 @@
+.calendar-widget {
+  padding: 5px 5px 5px 15px;
+  width: 410px; /* Adjust width as needed */
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2px;
+}
+
+.calendar-header button {
+  background-color: #ff0854;
+  color: white;
+  border: none;
+  padding: 0px 4px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.calendar-header button:hover {
+  background-color: #72b4ff;
+}
+
+.calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.calendar-day {
+  text-align: center;
+  padding: 5px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.other-month {
+  color: #ccc;
+}
+@media (max-width: 500px) {
+  .calendar-widget {
+    padding: 2px 2px 2px 7px;
+    width: fit-content; /* Adjust width as needed */
+  }
+  @media (max-width: 1000px) {
+    .calendar-widget {
+      width: fit-content; /* Adjust width as needed */
+    }
+  }
+}
