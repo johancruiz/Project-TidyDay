@@ -55,7 +55,7 @@ const ViewProject = () => {
       );
 
       if (response.ok) {
-        navigate("/pma/projects");
+        navigate("/pma/projects/1");
         console.log("Deleted");
       }
     } catch (error) {
@@ -84,7 +84,7 @@ const ViewProject = () => {
               >
                 <div className="link mt-3">
                   {" "}
-                  <Link to="/pma/projects">
+                  <Link to="/pma/projects/1">
                     <svg
                       stroke="currentColor"
                       fill="#ff0854"

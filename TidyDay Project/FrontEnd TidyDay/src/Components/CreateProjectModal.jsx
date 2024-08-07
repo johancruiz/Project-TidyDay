@@ -25,7 +25,7 @@ function CreateProjectModal({ show, handleClose, setAddSuccess }) {
     const token = localStorage.getItem("token");
     try {
       const response = await fetch(
-        "http://localhost:9090/projects/addProject",
+        "http://localhost:9090/projects/addProject?userId=1",
         {
           method: "POST",
           headers: {
