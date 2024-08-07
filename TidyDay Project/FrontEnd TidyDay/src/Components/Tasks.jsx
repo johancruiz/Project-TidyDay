@@ -23,7 +23,7 @@ function Tasks() {
   useEffect(() => {
     const getTasks = async () => {
       try {
-        const response = await fetch("http://localhost:9090/tasks/getTasksByUser", {
+        const response = await fetch("http://localhost:9090/tasks/getTasks", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

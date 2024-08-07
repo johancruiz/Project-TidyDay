@@ -1,3 +1,4 @@
+// src/App.js
 import "./App.css";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
@@ -26,10 +27,10 @@ function App() {
             <Routes>
               <Route path="/pma" element={<LandingPage />} />
               <Route path="/pma/login/pma/home" element={<Home />} />
-              <Route path="/pma/projects" element={<Projects />} />
+              <Route path="/pma/projects/:userId" element={<Projects />} />
               <Route path="/pma/tasks" element={<Tasks />} />
-              <Route path="/pma/calendar" element={<Calendar />}></Route>
-              <Route path="/pma/reports" element={<Reports />}></Route>
+              <Route path="/pma/calendar" element={<Calendar />} />
+              <Route path="/pma/reports" element={<Reports />} />
               <Route path="/pma/viewProject/:id" element={<ViewProject />} />
               <Route path="/pma/viewTask/:id" element={<ViewTask />} />
               <Route path="/pma/login" element={<Login />} />
@@ -38,7 +39,6 @@ function App() {
               <Route path="/pma/login/Signup" element={<Signup />} />
               <Route path="/login/pma/home" element={<Home />} />
               <Route path="Signup" element={<Signup />} />
-              
             </Routes>
           </div>
         </BrowserRouter>

@@ -46,7 +46,7 @@ function CreateProjectModal({ show, handleClose, setAddSuccess }) {
       } else {
         console.error('Error en la respuesta:', await response.text());
       }
-      navigate("/pma/projects");
+      navigate("/pma/projects/1");
     } catch (error) {
       console.log("Failed to add project", error);
     }

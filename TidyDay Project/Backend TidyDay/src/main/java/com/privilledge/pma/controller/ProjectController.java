@@ -5,6 +5,7 @@ import com.privilledge.pma.model.User;
 import com.privilledge.pma.repository.ProjectsRepo;
 import com.privilledge.pma.repository.UserRepo;
 import com.privilledge.pma.service.ProjectsService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,9 +27,12 @@ public class ProjectController {
     }
 
     @PostMapping("/addProject")
-    public String saveProject(@RequestBody Project project) {
-        projectsService.addProject(project);
-        return "Project added";
+    public ResponseEntity<String> addProject(@RequestParam("userId") Long userId, @RequestBody Project project) {
+        User user = userRepo.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        project.setUser(user);
+        projectsRepo.save(project);
+        return ResponseEntity.ok("Project saved");
     }
 
     @GetMapping("/getProjects")
@@ -74,9 +78,16 @@ public class ProjectController {
     }
 
     @GetMapping("/getProjectByUser/{userId}")
-    public List<Project> getProjectsByUser(@PathVariable Long userId) {
-        User user = userRepo.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
-        return projectsService.getByUser(user);
+    public ResponseEntity<List<Project>> getProjectsByUser(@PathVariable Long userId) {
+        try {
+            User user = userRepo.findById(userId)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+            List<Project> projects = projectsService.getByUser(user);
+            return ResponseEntity.ok(projects);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
     }
+
 }
 

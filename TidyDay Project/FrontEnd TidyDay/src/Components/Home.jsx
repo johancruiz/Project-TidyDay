@@ -19,7 +19,7 @@ function Home({ userId }) {
 
   const fetchTasks = async () => {
     try {
-      const response = await fetch("http://localhost:9090/tasks/getTasksByUser", {
+      const response = await fetch("http://localhost:9090/tasks/getTasks", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -38,7 +38,7 @@ function Home({ userId }) {
 
   const fetchProjects = async () => {
     try {
-      const response = await fetch("http://localhost:9090/projects/getProjectByUser", {
+      const response = await fetch("http://localhost:9090/projects/getProjects", {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -187,7 +187,7 @@ function Home({ userId }) {
                             height="1.2em"
                             width="1.2em"
                             xmlns="http://www.w3.org/2000/svg"
-                            onClick={() => navigate("/pma/projects")}
+                            onClick={() => navigate("/pma/projects/:userId")}
                             style={{ cursor: "pointer" }}
                           >
                             <path

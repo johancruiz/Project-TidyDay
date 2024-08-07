@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+// src/Components/Projects.jsx
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import TopBar from "./TopBar";
 import { Row, Col } from "react-bootstrap";
 import CreateProjectModal from "./CreateProjectModal";
-import { useNavigate } from "react-router";
 
-function Projects({ userId }) {
+function Projects() {
+  const { userId } = useParams();  // Obtener el userId de la URL
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [projects, setProjects] = useState([]);

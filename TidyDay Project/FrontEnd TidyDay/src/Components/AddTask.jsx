@@ -20,19 +20,13 @@ const AddTask = ({
 
   useEffect(() => {
     const getProjects = async () => {
-      const token = localStorage.getItem("token");
-      if (!token || token.split(".").length !== 3) {
-        console.log("Invalid token");
-      }
-
       try {
         const response = await fetch(
-          "http://localhost:9090/projects/getProjectByUser",
+          "http://localhost:9090/tasks/getTasks",
           {
             method: "GET",
             headers: {
-              "Content-Type": "application/application/x-www-form-urlencoded",
-              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
             },
           }
         );
@@ -46,7 +40,6 @@ const AddTask = ({
   }, [userId]);
 
   const addTask = async (e) => {
-    const token = localStorage.getItem("token");
     e.preventDefault();
     const newTask = { ...taskData, project: { id: projectId } };
     if (taskData.taskName.length > 0 && projectId) {
@@ -55,7 +48,6 @@ const AddTask = ({
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(newTask),
         });

@@ -1,10 +1,10 @@
+// src/Components/Login.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUserName } from '../Redux/Action';
 import smallLogo from '../assets/smallLogo.png';
 import { Link } from 'react-router-dom';
-
 
 function Login() {
   const dispatch = useDispatch();
@@ -43,7 +43,7 @@ function Login() {
         console.log('User logged in successfully');
         localStorage.setItem('username', data.username);
         dispatch(setUserName(data.username));
-        navigate('pma/home');
+        navigate(`/pma/projects/${data.userId}`);  // Redirigir a la URL con el userId
       } else {
         alert('Invalid credentials');
       }
