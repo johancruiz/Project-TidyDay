@@ -25,7 +25,7 @@ function App() {
           <div className="app">
             <Routes>
               <Route path="/pma" element={<LandingPage />} />
-              <Route path="/pma/home" element={<Home />} />
+              <Route path="/pma/login/pma/home" element={<Home />} />
               <Route path="/pma/projects" element={<Projects />} />
               <Route path="/pma/tasks" element={<Tasks />} />
               <Route path="/pma/calendar" element={<Calendar />}></Route>
@@ -33,7 +33,12 @@ function App() {
               <Route path="/pma/viewProject/:id" element={<ViewProject />} />
               <Route path="/pma/viewTask/:id" element={<ViewTask />} />
               <Route path="/pma/login" element={<Login />} />
+              <Route path="login" element={<Login />} />
               <Route path="/pma/signup" element={<Signup />} />
+              <Route path="/pma/login/Signup" element={<Signup />} />
+              <Route path="/login/pma/home" element={<Home />} />
+              <Route path="Signup" element={<Signup />} />
+              
             </Routes>
           </div>
         </BrowserRouter>

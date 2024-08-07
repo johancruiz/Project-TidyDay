@@ -1,103 +1,118 @@
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import smallLogo from "../assets/smallLogo.png";
-import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { setUserName } from "../Redux/Action";
 
-function Signup() {
+function SignUp() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const email = useSelector((state) => state.email);
-
-  const [data, setData] = useState({
-    email: email,
+  const [formData, setFormData] = useState({
     username: "",
+    email: "",
     password: "",
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setData((prevData) => {
-      const updatedData = { ...prevData, [name]: value };
-      if (name === "username") {
-        dispatch(setUserName(updatedData.username));
-      }
-      return updatedData;
-    });
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
-  const signin = async (event) => {
-    event.preventDefault();
-    if (data.username.length > 0 && data.password.length > 0) {
-      try {
-        const response = await fetch("http://localhost:9090/users/addUser", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
-        });
-        if (response.ok) {
-          const result = await response.json(); // Assuming the response is JSON
-          console.log("Posted", result);
-          navigate("/pma/home");
-        } else {
-          console.log("Failed to sign up");
-        }
-      } catch (error) {
-        console.log("Error signing up", error);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch("http://localhost:9090/users/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-    } else {
-      console.log("Enter details");
+
+      const data = await response.json();
+      if (response.status === 201) {
+        dispatch(setUserName(formData.username)); // Opcional: Puedes configurar el nombre del usuario aquí si es necesario
+        navigate("/login"); // Redirige al usuario a la página de inicio de sesión
+      } else {
+        alert("Signup failed");
+      }
+    } catch (error) {
+      console.error("Error", error);
+      alert("Signup failed");
     }
   };
 
   return (
-    <div className="login-page">
+    <div className="signup-page m-0">
       <section className="w-95 d-flex justify-content-center pb-4 p-4">
-        <form className="card log-in-card" onSubmit={signin}>
+        <form className="card log-in-card" onSubmit={handleSubmit}>
           <div data-mdb-input-init className="form-outline mb-4 text-center">
             <img src={smallLogo} alt="" className="logo" />
             <br />
-            <small>
-              Hi, we have sent a verification email to{" "}
-              <h6 className="fw-bold">{email}</h6>. Please enter your details
-              to join myWorkSpace
-            </small>
+            <small>Create a new account to get started with myWorkSpace</small>
           </div>
+
           <div data-mdb-input-init className="form-outline mb-4">
-            <h6>Create username</h6>
+            <h6>Username</h6>
             <input
               type="text"
               className="form-control"
-              value={data.username}
-              onChange={handleChange}
+              value={formData.username}
               name="username"
+              onChange={handleChange}
+              required
             />
           </div>
+
           <div data-mdb-input-init className="form-outline mb-4">
-            <h6>Create Password</h6>
+            <h6>Email</h6>
+            <input
+              type="email"
+              className="form-control"
+              value={formData.email}
+              name="email"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div data-mdb-input-init className="form-outline mb-4">
+            <h6>Password</h6>
             <input
               type="password"
               className="form-control"
-              value={data.password}
-              onChange={handleChange}
+              value={formData.password}
               name="password"
+              onChange={handleChange}
+              required
             />
           </div>
+
           <button
             data-mdb-ripple-init
             type="submit"
             className="btn btn-primary btn-block mb-4 mt-3"
           >
-            Verify
-          </button>{" "}
-          <hr />
-          <small className="text-center">
-            Didn't receive email? <a href="#">Resend</a>,<br />
-          </small>
+            Sign Up
+          </button>
+
+          <div className="text-center">
+            <p>
+              Already have an account? <Link to="/pma/Signup">Sign in here</Link>
+            </p>
+          </div>
         </form>
       </section>
     </div>
   );
 }
 
-export default Signup;
+export default SignUp;

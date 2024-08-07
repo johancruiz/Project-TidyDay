@@ -6,40 +6,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService {
-
     @Autowired
     private UserRepo userRepo;
+
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private BCryptPasswordEncoder passwordEncoder;
 
     public User saveUser(User user) {
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepo.save(user);
     }
 
-    public String login(String email, String password) {
-        User user = userRepo.findUserByEmail(email);
-        if (user != null && bCryptPasswordEncoder.matches(password, user.getPassword())) {
-            return "User logged in";
-        } else {
-            return "Invalid login";
-        }
+    public Optional<User> findById(Long id) {
+        return userRepo.findById(id);
     }
 
-
-    public Map<String, String> authenticateUser(String email, String password) {
-        User user = userRepo.findUserByEmail(email);
-        if (user != null && bCryptPasswordEncoder.matches(password, user.getPassword())) {
-            Map<String, String> response = new HashMap<>();
-            response.put("username", user.getUsername());
-            return response;
-        }
-        return null; // Return null if authentication fails
+    public List<User> findAll() {
+        return userRepo.findAll();
     }
 
+    public User authenticateUser(String email, String password) throws Exception {
+        User user = userRepo.findByEmail(email)
+                .orElseThrow(() -> new Exception("User not found"));
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new Exception("Invalid password");
+        }
+
+        return user;
+    }
 }

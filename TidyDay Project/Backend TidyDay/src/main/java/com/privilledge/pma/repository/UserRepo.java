@@ -4,11 +4,13 @@ import com.privilledge.pma.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
-public interface UserRepo extends JpaRepository<User,Long> {
-     User findUserByEmail(String email);
+public interface UserRepo extends JpaRepository<User, Long> {
+     // Buscar un usuario por su correo electrónico
+     Optional<User> findByEmail(String email);
 
-     User findUserByUsername(String username);
-
-
+     // Buscar un usuario por su nombre de usuario
+     Optional<User> findByUsername(String username);
 }
