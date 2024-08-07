@@ -106,7 +106,7 @@ function SignUp() {
 
           <div className="text-center">
             <p>
-              Already have an account? <Link to="/pma/Signup">Sign in here</Link>
+              Already have an account? <Link to="/pma/login">Sign in here</Link>
             </p>
           </div>
         </form>
