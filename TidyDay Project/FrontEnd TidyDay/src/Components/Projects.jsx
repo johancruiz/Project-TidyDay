@@ -7,7 +7,6 @@ import { Row, Col } from "react-bootstrap";
 import CreateProjectModal from "./CreateProjectModal";
 
 function Projects() {
-  const { userId } = useParams();  // Obtener el userId de la URL
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
   const [projects, setProjects] = useState([]);
@@ -16,8 +15,11 @@ function Projects() {
 
   const handleShowModal = () => setShowModal(true);
   const handleHideModal = () => setShowModal(false);
+  let userId = 1;
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    userId = params.get('user');
     const getProjects = async () => {
       try {
         const response = await fetch(

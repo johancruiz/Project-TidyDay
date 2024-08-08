@@ -39,6 +39,9 @@ function App() {
               <Route path="/pma/login/Signup" element={<Signup />} />
               <Route path="/login/pma/home" element={<Home />} />
               <Route path="Signup" element={<Signup />} />
+              <Route path="/pma/projects" element={<Projects />}/>
+              <Route path="/pma/home" element={<Home />}/>
+
             </Routes>
           </div>
         </BrowserRouter>

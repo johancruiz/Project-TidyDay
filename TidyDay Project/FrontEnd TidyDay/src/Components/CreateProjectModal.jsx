@@ -22,15 +22,16 @@ function CreateProjectModal({ show, handleClose, setAddSuccess }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = localStorage.getItem("token");
+    
     try {
+      const params = new URLSearchParams(window.location.search);
+      const userId = params.get('user');
       const response = await fetch(
-        "http://localhost:9090/projects/addProject?userId=1",
+        `http://localhost:9090/projects/addProject?userId=${userId}`,
         {
           method: "POST",
           headers: {
-            "Content-type": "application/json",
-            Authorization: `Bearer ${token}`,
+            "Content-type": "application/json"
           },
           body: JSON.stringify(data),
         }
@@ -46,7 +47,7 @@ function CreateProjectModal({ show, handleClose, setAddSuccess }) {
       } else {
         console.error('Error en la respuesta:', await response.text());
       }
-      navigate("/pma/projects/1");
+      navigate(`/pma/projects?user=${userId}`);
     } catch (error) {
       console.log("Failed to add project", error);
     }

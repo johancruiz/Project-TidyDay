@@ -43,7 +43,7 @@ function Login() {
         console.log('User logged in successfully');
         localStorage.setItem('username', data.username);
         dispatch(setUserName(data.username));
-        navigate(`/pma/projects/${data.userId}`);  // Redirigir a la URL con el userId
+        navigate(`/pma/projects?user=${data.id}`);  // Redirigir a la URL con el userId
       } else {
         alert('Invalid credentials');
       }
