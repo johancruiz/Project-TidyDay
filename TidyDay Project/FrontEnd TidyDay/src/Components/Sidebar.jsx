@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import "../assets/componentsStyles/sidebar.css";
 import smallLogo from "../assets/mywork.png";
 function Sidebar({ userId }) {
+  console.log(userId)
   return (
     <>
       <nav className="sidebar">
@@ -48,7 +49,7 @@ function Sidebar({ userId }) {
             </Link>
           </li>
           <li>
-            <Link to={`/pma/projects`}>
+            <Link to={`/pma/projects?user=${userId}`}>
               <span className="icon">
                 <svg
                   stroke="currentColor"

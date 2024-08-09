@@ -67,7 +67,7 @@ function Projects() {
 
   return (
     <>
-      <Sidebar />
+      <Sidebar userId={userId} />
       <div className="main-content">
         <TopBar />
         <div

@@ -40,7 +40,7 @@ function SignUp() {
       const data = await response.json();
       if (response.status === 201) {
         dispatch(setUserName(formData.username)); // Opcional: Puedes configurar el nombre del usuario aquí si es necesario
-        navigate("/login"); // Redirige al usuario a la página de inicio de sesión
+        navigate("/pma/login"); // Redirige al usuario a la página de inicio de sesión
       } else {
         alert("Signup failed");
       }

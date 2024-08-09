@@ -71,6 +71,8 @@ function Home({ userId }) {
     navigate("/pma/reports");
   };
 
+  
+
   return (
     <>
       <Sidebar />
@@ -80,7 +82,7 @@ function Home({ userId }) {
           <div className="intro">
             <Row>
               <Col md={7} className="py-3">
-                <h2 className="fw-bold py-0 mb-0">Hi {username || "Kate Moore"}</h2>
+                <h2 className="fw-bold py-0 mb-0">Hi {username}</h2>
                 <small className="mb-0 mt-0">Welcome to your workspace</small>
               </Col>
               <Col md={5} className="py-3 create">
@@ -187,7 +189,7 @@ function Home({ userId }) {
                             height="1.2em"
                             width="1.2em"
                             xmlns="http://www.w3.org/2000/svg"
-                            onClick={() => navigate("/pma/projects/:userId")}
+                            onClick={() => navigate(`/pma/projects?user=${userId}`)}
                             style={{ cursor: "pointer" }}
                           >
                             <path
