@@ -42,8 +42,9 @@ function Login() {
       if (data !== 'Invalid login') {
         console.log('User logged in successfully');
         localStorage.setItem('username', data.username);
+        localStorage.setItem('userId', data.id); // Almacena el ID del usuario
         dispatch(setUserName(data.username));
-        navigate(`/pma/projects?user=${data.id}`);  // Redirigir a la URL con el userId
+        navigate(`/pma/projects/${data.id}`); // Redirigir a la URL con el userId
       } else {
         alert('Invalid credentials');
       }
@@ -102,7 +103,7 @@ function Login() {
           </div>
           <div className="text-center">
             <p>
-              Don’t have an account? <Link to="/signup">Sign up here</Link>
+              Don’t have an account? <Link to="/pma/signup">Sign up here</Link> {/* Ajustado */}
             </p>
           </div>
         </form>

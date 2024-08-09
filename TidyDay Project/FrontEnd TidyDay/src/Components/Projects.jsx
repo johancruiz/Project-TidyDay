@@ -1,6 +1,6 @@
 // src/Components/Projects.jsx
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import TopBar from "./TopBar";
 import { Row, Col } from "react-bootstrap";
@@ -8,19 +8,23 @@ import CreateProjectModal from "./CreateProjectModal";
 
 function Projects() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [showModal, setShowModal] = useState(false);
   const [projects, setProjects] = useState([]);
-  const [addSuccess, setAddSuccess] = useState(""); // State for add success message
+  const [addSuccess, setAddSuccess] = useState("");
   const [notification, setNotification] = useState("");
 
   const handleShowModal = () => setShowModal(true);
-  const handleHideModal = () => setShowModal(false);
-  let userId = 1;
+  const handleHideModal = () => {
+    setShowModal(false);
+    getProjects(); // Actualizar lista de proyectos después de cerrar el modal
+  };
 
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    userId = params.get('user');
-    const getProjects = async () => {
+  // Obtener el ID del usuario desde el estado de la navegación o localStorage
+  const userId = location.state?.userId || localStorage.getItem('userId');
+
+  const getProjects = async () => {
+    if (userId) {
       try {
         const response = await fetch(
           `http://localhost:9090/projects/getProjectByUser/${userId}`,
@@ -42,11 +46,11 @@ function Projects() {
       } catch (error) {
         console.error("Failed to fetch projects:", error);
       }
-    };
-
-    if (userId) {
-      getProjects();
     }
+  };
+
+  useEffect(() => {
+    getProjects();
   }, [userId]);
 
   const projectChunks = [];
@@ -55,19 +59,22 @@ function Projects() {
   }
 
   const handleViewProject = (id) => {
-    navigate(`/pma/viewProject/${id}`);
+    navigate(`/pma/viewProject/${id}`); // Navegar a la vista del proyecto
   };
 
-  const showNotification = (message) => {
-    setNotification(message);
-    setTimeout(() => {
-      setNotification("");
-    }, 3000); // Notification disappears after 3 seconds
-  };
+  useEffect(() => {
+    if (addSuccess) {
+      const timer = setTimeout(() => {
+        setAddSuccess("");
+      }, 3000); // Ocultar notificación después de 5 segundos
+
+      return () => clearTimeout(timer); // Limpiar el timer si el componente se desmonta
+    }
+  }, [addSuccess]);
 
   return (
     <>
-      <Sidebar userId={userId} />
+      <Sidebar/>
       <div className="main-content">
         <TopBar />
         <div
@@ -81,7 +88,7 @@ function Projects() {
         >
           <div className="row" style={{ marginLeft: "0px", marginRight: "0px" }}>
             <Col md={6} xs={5} sm={6} className="mt-2">
-              <h5 className="fw-bold projects-title mt-1" style={{}}>
+              <h5 className="fw-bold projects-title mt-1">
                 All Projects
               </h5>
             </Col>
@@ -119,8 +126,9 @@ function Projects() {
             show={showModal}
             handleClose={handleHideModal}
             setAddSuccess={setAddSuccess}
+            userId={userId}
           />
-          {addSuccess && <div className="notification">{addSuccess}</div>}{" "}
+          {addSuccess && <div className="notification">{addSuccess}</div>}
           {projects.length > 0 ? (
             <div className="projects-cards mt-2">
               {projectChunks.map((chunk, chunkIndex) => (
@@ -132,18 +140,12 @@ function Projects() {
                         onClick={() => handleViewProject(project.id)}
                       >
                         <div className="card-body">
-                          {" "}
                           <div className="row d-flex">
                             <div className="col-7">
-                              {" "}
-                              <h4
-                                className="fw-bold mt-1"
-                                style={{ fontSize: "15px" }}
-                              >
+                              <h4 className="fw-bold mt-1" style={{ fontSize: "15px" }}>
                                 {project.projectName}
                               </h4>
                             </div>
-
                             <div className="status-btn col-5 mb-1">
                               <button
                                 className="status"
@@ -164,18 +166,13 @@ function Projects() {
                           <div className="dates">
                             <h6 style={{ fontSize: "14px" }}>
                               Added date:{" "}
-                              <span
-                                style={{ fontSize: "14px", fontWeight: "300" }}
-                              >
+                              <span style={{ fontSize: "14px", fontWeight: "300" }}>
                                 {project.addedDate}
                               </span>
                             </h6>
-
                             <h6 style={{ fontSize: "14px" }}>
                               Due date:
-                              <span
-                                style={{ fontSize: "14px", fontWeight: "300" }}
-                              >
+                              <span style={{ fontSize: "14px", fontWeight: "300" }}>
                                 {project.dueDate}
                               </span>
                             </h6>

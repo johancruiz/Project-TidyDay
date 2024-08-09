@@ -1,11 +1,12 @@
+// src/Components/CreateProjectModal.jsx
 import { useRef, useState } from "react";
 import { Modal, Button, Col } from "react-bootstrap";
-import { useNavigate } from "react-router-dom"; // Asegúrate de estar importando desde 'react-router-dom'
+import { useNavigate } from "react-router-dom";
 
-function CreateProjectModal({ show, handleClose, setAddSuccess }) {
+function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
   const ref = useRef();
   const ref2 = useRef();
-  const navigate = useNavigate(); // Llamar a useNavigate como una función
+  const navigate = useNavigate();
   const [selectedValue, setSelectedValue] = useState("Status");
   const [data, setData] = useState({
     projectName: "",
@@ -15,39 +16,43 @@ function CreateProjectModal({ show, handleClose, setAddSuccess }) {
     addedDate: "",
     dueDate: "",
     progress: "",
-    user_id: "",
   });
 
   const handleSelectedValue = (value) => setSelectedValue(value);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
+    // Asegúrate de que el userId no sea undefined
+    if (!userId) {
+      console.error("User ID is undefined");
+      return;
+    }
+
     try {
-      const params = new URLSearchParams(window.location.search);
-      const userId = params.get('user');
       const response = await fetch(
         `http://localhost:9090/projects/addProject?userId=${userId}`,
         {
           method: "POST",
           headers: {
-            "Content-type": "application/json"
+            "Content-type": "application/json",
           },
           body: JSON.stringify(data),
         }
       );
+
+      const responseText = await response.text(); // Obtener la respuesta como texto
+
       if (response.ok) {
         console.log("Added project");
         handleClose();
-        setAddSuccess("Project added successfully!"); // Set add success message
+        setAddSuccess(responseText); // Usar texto de la respuesta
 
-        setTimeout(() => {
-          window.location.reload();
-        }, 1000);
+        // Redirigir a la página de proyectos
+        navigate(`/pma/projects/${userId}`);
       } else {
-        console.error('Error en la respuesta:', await response.text());
+        console.error('Error en la respuesta:', responseText);
       }
-      navigate(`/pma/projects?user=${userId}`);
     } catch (error) {
       console.log("Failed to add project", error);
     }
