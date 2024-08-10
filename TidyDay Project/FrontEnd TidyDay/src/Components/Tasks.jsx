@@ -15,6 +15,8 @@ function Tasks() {
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
 
+  
+
   useEffect(() => {
     const getTasks = async () => {
       try {
@@ -24,6 +26,7 @@ function Tasks() {
         });
         if (response.ok) {
           const result = await response.json();
+          console.log("Tasks fetched");
           setTasks(result);
         } else {
           console.log("Failed to fetch tasks");
@@ -265,6 +268,7 @@ function Tasks() {
             setAddSuccess={setAddSuccess} // Pass the setAddSuccess function to AddTask
             handleClose={handleClose}
             show={showModal}
+            showNotification={showNotification}
           />
         )}
         {notification && <div className="notification">{notification}</div>}

@@ -6,7 +6,7 @@ const AddTask = ({
   handleClose,
   showNotification,
   setAddSuccess,
-  userId,  // Asegúrate de que esta prop esté definida
+    // Asegúrate de que esta prop esté definida
 }) => {
   const [taskData, setTaskData] = useState({
     taskName: "",
@@ -18,10 +18,12 @@ const AddTask = ({
   const [projects, setProjects] = useState([]);
   const [projectId, setProjectId] = useState("");
 
+  const userId = location.state?.userId || localStorage.getItem('userId');
+
   useEffect(() => {
     const getProjects = async () => {
       try {
-        const response = await fetch("http://localhost:9090/tasks/getAllProjects", {
+        const response = await fetch(`http://localhost:9090/projects/getProjectByUser/${userId}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -42,6 +44,7 @@ const AddTask = ({
   }, []);
 
   const addTask = async (e) => {
+    
     e.preventDefault();
     if (!userId) {
       console.log("User ID is not defined");
@@ -51,7 +54,7 @@ const AddTask = ({
     const newTask = { ...taskData, project: { id: projectId }, userId };
     if (taskData.taskName.length > 0 && projectId) {
       try {
-        const response = await fetch(`http://localhost:9090/tasks/addTask`, {
+        const response = await fetch(`http://localhost:9090/tasks/addTask?userId=${userId}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

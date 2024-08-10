@@ -7,7 +7,7 @@ import CreateProjectModal from "./CreateProjectModal";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 
-function Home({ userId }) {
+function Home() {
   const username = useSelector((state) => state.username);
   const navigate = useNavigate();
   const [tasks, setTasks] = useState([]);
@@ -17,9 +17,11 @@ function Home({ userId }) {
   const handleShowModal = () => setShowModal(true);
   const handleHideModal = () => setShowModal(false);
 
+  const userId = location.state?.userId || localStorage.getItem('userId');
+
   const fetchTasks = async () => {
     try {
-      const response = await fetch("http://localhost:9090/tasks/getTasks", {
+      const response = await fetch(`http://localhost:9090/tasks/getTasksByUser?userId=${userId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -40,7 +42,7 @@ function Home({ userId }) {
 
   const fetchProjects = async () => {
     try {
-      const response = await fetch("http://localhost:9090/projects/getProjects", {
+      const response = await fetch(`http://localhost:9090/projects/getProjectByUser/${userId}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
