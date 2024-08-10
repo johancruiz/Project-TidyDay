@@ -1,8 +1,15 @@
+import { useNavigate } from "react-router-dom"; // Importa useNavigate
 import iconPic from "../assets/icon.jpg";
+import "../Components/Icon.css";
+
+
 function Icon() {
+  const navigate = useNavigate(); // Inicializa useNavigate
+
   const logout = () => {
-    localStorage.getItem("token");
+    navigate("/pma/login"); // Redirige a la página de login
   };
+
   return (
     <>
       <div className="imageIcon">
@@ -24,11 +31,11 @@ function Icon() {
         {/* <img
           src={iconPic}
           style={{ width: "38px" }}
-         
           alt=""
         /> */}
       </div>
     </>
   );
 }
+
 export default Icon;

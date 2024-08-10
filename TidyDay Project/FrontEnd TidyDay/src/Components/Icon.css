@@ -1,0 +1,17 @@
+/* Icon.css */
+.imageIcon {
+  position: absolute; 
+  top: 5px; 
+  right: 30px; 
+}
+
+.icon-image {
+  cursor: pointer; 
+  transition: transform 0.2s ease, color 0.2s ease; 
+  color: #000; 
+}
+
+.icon-image:hover {
+  color: #007bff; 
+  transform: scale(1.1); 
+}
