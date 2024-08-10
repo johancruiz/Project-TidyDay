@@ -1,7 +1,9 @@
 package com.privilledge.pma.controller;
 
+import com.privilledge.pma.model.Project;
 import com.privilledge.pma.model.Task;
 import com.privilledge.pma.model.User;
+import com.privilledge.pma.repository.ProjectsRepo;
 import com.privilledge.pma.repository.TaskRepository;
 import com.privilledge.pma.repository.UserRepo;
 import com.privilledge.pma.service.TaskService;
@@ -18,11 +20,13 @@ public class TaskController {
     private final TaskService taskService;
     private final TaskRepository taskRepository;
     private final UserRepo userRepo;
+    private final ProjectsRepo projectsRepo; // Usa ProjectsRepo en lugar de ProjectRepository
 
-    public TaskController(TaskService taskService, TaskRepository taskRepository, UserRepo userRepo) {
+    public TaskController(TaskService taskService, TaskRepository taskRepository, UserRepo userRepo, ProjectsRepo projectsRepo) {
         this.taskService = taskService;
         this.taskRepository = taskRepository;
         this.userRepo = userRepo;
+        this.projectsRepo = projectsRepo; // Inicializa el repositorio de proyectos
     }
 
     @PostMapping("/addTask")
@@ -92,5 +96,12 @@ public class TaskController {
     public ResponseEntity<List<Task>> getTasksByUser(@RequestParam Long userId) {
         User user = userRepo.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         return ResponseEntity.ok(taskService.getTaskByUser(user));
+    }
+
+    // Nuevo método para obtener todos los proyectos
+    @GetMapping("/getAllProjects")
+    public ResponseEntity<List<Project>> getAllProjects() {
+        List<Project> projects = projectsRepo.findAll(); // Usa projectsRepo para obtener todos los proyectos
+        return ResponseEntity.ok(projects);
     }
 }

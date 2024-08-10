@@ -6,7 +6,7 @@ const AddTask = ({
   handleClose,
   showNotification,
   setAddSuccess,
-  userId,
+  userId,  // Asegúrate de que esta prop esté definida
 }) => {
   const [taskData, setTaskData] = useState({
     taskName: "",
@@ -21,36 +21,44 @@ const AddTask = ({
   useEffect(() => {
     const getProjects = async () => {
       try {
-        const response = await fetch(
-          "http://localhost:9090/tasks/getTasks",
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-        const projects = await response.json();
-        setProjects(projects);
+        const response = await fetch("http://localhost:9090/tasks/getAllProjects", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (response.ok) {
+          const projectsData = await response.json();
+          setProjects(projectsData);
+        } else {
+          console.log("Failed to fetch projects");
+        }
       } catch (error) {
-        console.log("Failed to fetch", error);
+        console.log("Failed to fetch projects", error);
       }
     };
     getProjects();
-  }, [userId]);
+  }, []);
 
   const addTask = async (e) => {
     e.preventDefault();
-    const newTask = { ...taskData, project: { id: projectId } };
+    if (!userId) {
+      console.log("User ID is not defined");
+      return;
+    }
+
+    const newTask = { ...taskData, project: { id: projectId }, userId };
     if (taskData.taskName.length > 0 && projectId) {
       try {
-        const response = await fetch("http://localhost:9090/tasks/addTask", {
+        const response = await fetch(`http://localhost:9090/tasks/addTask`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(newTask),
         });
+
         if (response.ok) {
           console.log("Task added");
           handleClose();
