@@ -89,11 +89,6 @@ function Home() {
                 <h2 className="fw-bold py-0 mb-0">Hi {user}</h2>
                 <small className="mb-0 mt-0">Welcome to your workspace</small>
               </Col>
-              <Col md={5} className="py-3 create">
-                <button onClick={handleShowModal} className="btn">
-                  Add project
-                </button>
-              </Col>
             </Row>
           </div>
           <CreateProjectModal show={showModal} handleClose={handleHideModal} />
