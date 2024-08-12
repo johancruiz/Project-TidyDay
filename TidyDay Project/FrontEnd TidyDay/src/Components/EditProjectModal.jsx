@@ -1,207 +1,138 @@
-import { Modal } from "react-bootstrap";
-import { useRef, useState } from "react";
-import { Col } from "react-bootstrap";
+import { Modal, Col } from "react-bootstrap";
+import { useState } from "react";
 import { useParams } from "react-router";
-function EditProjectModal({ show, handleClose, projectData, setProjectData }) {
-  const ref = useRef();
-  const ref2 = useRef();
-  const [selectedValue, setSelectedValue] = useState(projectData.status);
-  const handleStatus = (selected) => {
-    setSelectedValue(selected);
-  };
 
+function EditProjectModal({ show, handleClose, projectData, setProjectData }) {
+  const [selectedValue, setSelectedValue] = useState(projectData.status);
   const { id } = useParams();
 
   const updateProject = async (e) => {
+    e.preventDefault();
     try {
       const response = await fetch(
         `http://localhost:9090/projects/editProject/${id}`,
         {
           method: "PUT",
           headers: {
-            "Content-type": "application/json",
+            "Content-Type": "application/json",
           },
-          body: JSON.stringify(projectData),
+          body: JSON.stringify({
+            ...projectData,
+            status: selectedValue, // Ensure status is sent
+          }),
         }
       );
       if (response.ok) {
         console.log("Updated project");
+        handleClose();
+      } else {
+        throw new Error("Failed to update project");
       }
     } catch (error) {
-      console.log("Failed to update project");
-      e.preventDefault();
+      console.error(error);
+      // Optionally display error to the user
     }
   };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProjectData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   return (
-    <>
-      <Modal show={show} className="modal " onHide={handleClose} size="lg">
-        <form action="" className="form" onSubmit={updateProject}>
-          <div className="container">
-            <Modal.Header closeButton className="custom-modal-header p-3">
-              <Modal.Title>
-                <h6>Edit project</h6>
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
+    <Modal show={show} onHide={handleClose} size="lg">
+      <form onSubmit={updateProject}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Project</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <input
+            type="text"
+            name="projectName"
+            placeholder="Project name"
+            className="modal-input fw-bold project-name-input m-1"
+            value={projectData.projectName}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="text"
+            name="summary"
+            placeholder="Add a short summary"
+            className="project-summary-input project-name-input m-1"
+            value={projectData.summary}
+            onChange={handleChange}
+            required
+          />
+          <div className="row projects-buttons mt-3">
+            <Col md={3} sm={4} xs={4}>
               <input
-                type="text"
-                name="projectName"
-                id=""
-                placeholder="Project name"
-                style={{ fontSize: "18px", color: "#000" }}
-                className="fw-bold project-name-input m-1"
-                value={projectData.projectName}
+                type="date"
+                name="addedDate"
+                placeholder="Starting date"
+                value={projectData.addedDate}
                 onChange={handleChange}
                 required
               />
-              <br />
+            </Col>
+            <Col md={3} sm={4} xs={4}>
               <input
-                type="text"
-                name="summary"
-                id=""
-                placeholder="Add a short summary"
-                style={{ fontSize: "14px", fontWeight: "500" }}
-                className=" project-name-input m-1"
-                value={projectData.summary}
+                type="date"
+                name="dueDate"
+                placeholder="Due date"
+                value={projectData.dueDate}
                 onChange={handleChange}
                 required
               />
-
-              <div className="row projects-buttons mt-3 ">
-                <Col md={3} sm={4} xs={4}>
-                  {" "}
-                  <input
-                    type="text"
-                    name="addedDate"
-                    id=""
-                    placeholder="Starting date"
-                    ref={ref}
-                    onFocus={() => (ref.current.type = "date")}
-                    onBlur={() => (ref.current.type = "text")}
-                    required
-                    value={"Added:" + projectData.addedDate}
-                  />
-                </Col>
-
-                <Col md={3} sm={4} xs={4}>
-                  {" "}
-                  <input
-                    type="text"
-                    name="dueDate"
-                    id=""
-                    placeholder="Due date"
-                    ref={ref2}
-                    onFocus={() => (ref2.current.type = "date")}
-                    onBlur={() => (ref2.current.type = "text")}
-                    value={"Due:" + projectData.dueDate}
-                    required
-                  />
-                </Col>
-                <Col md={3} sm={4} xs={4}>
-                  <div className="dropdown">
-                    <button
-                      className="btn status-dropdown dropdown-toggle custom-dropdown-toggle p-1"
-                      data-bs-toggle="dropdown"
-                      style={{
-                        height: "28px",
-                        width: "160px",
-                        border: "1px solid #e8e8e8",
-                        borderRadius: "2px",
-                      }}
-                    >
-                      {!selectedValue ? projectData.status : selectedValue}
-                    </button>
-                    <ul className="dropdown-menu">
-                      <li
-                        className="dropdown-item"
-                        onClick={() => handleStatus("Not started")}
-                      >
-                        Not started
-                      </li>
-                      <li
-                        className="dropdown-item"
-                        onClick={() => handleStatus("In-progress")}
-                      >
-                        In-progress
-                      </li>
-                      <li
-                        className="dropdown-item"
-                        onClick={() => handleStatus("Completed")}
-                      >
-                        Completed
-                      </li>
-                    </ul>
-                  </div>
-                </Col>
-                <Col md={3} sm={4} xs={4}>
-                  {" "}
-                  <input
-                    type="number"
-                    name="progress"
-                    placeholder="Progress %"
-                    value={`${projectData.progress}`}
-                    onChange={handleChange}
-                  />
-                </Col>
-              </div>
-              <hr style={{ color: "#31D2F2" }} />
-              <textarea
-                name="description"
-                id=""
-                cols=""
-                rows="5"
-                placeholder=" Write a description,a project brief or collect ideas..."
-                style={{ border: "none", width: "100%" }}
-                value={projectData.description}
-                onChange={handleChange}
-              />
-
-              <hr />
-              <textarea
-                name="notes"
-                id=""
-                cols=""
-                rows="5"
-                placeholder=" Write some notes..."
-                style={{ border: "none", width: "100%" }}
-                value={projectData.notes}
-                onChange={handleChange}
-              />
-
-              <hr />
-              <div
-                className="row"
-                style={{ display: "flex", justifyContent: "flex-end" }}
+            </Col>
+            <Col md={3} sm={4} xs={4}>
+              <select
+                name="status"
+                value={selectedValue}
+                onChange={(e) => setSelectedValue(e.target.value)}
+                className="form-select"
               >
-                <div
-                  className="btn btn-secondary m-1"
-                  style={{ width: "fit-content" }}
-                  onClick={handleClose}
-                >
-                  Cancel
-                </div>
-                <button
-                  className="btn  m-1"
-                  style={{
-                    width: "fit-content",
-                    backgroundColor: "#ff0854",
-                    color: "#fff",
-                  }}
-                  type="submit"
-                >
-                  Update Project
-                </button>
-              </div>
-            </Modal.Body>
+                <option value="Not started">Not started</option>
+                <option value="In-progress">In-progress</option>
+                <option value="Completed">Completed</option>
+              </select>
+            </Col>
+            <Col md={3} sm={4} xs={4}>
+              <input
+                type="number"
+                name="progress"
+                placeholder="Progress %"
+                value={projectData.progress || ""}
+                onChange={handleChange}
+              />
+            </Col>
           </div>
-        </form>
-      </Modal>
-    </>
+          <hr />
+          <textarea
+            name="description"
+            rows="5"
+            placeholder="Write a description, project brief, or collect ideas..."
+            className="w-100"
+            value={projectData.description}
+            onChange={handleChange}
+          />
+          <hr />
+          <textarea
+            name="notes"
+            rows="5"
+            placeholder="Write some notes..."
+            className="w-100"
+            value={projectData.notes}
+            onChange={handleChange}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <button className="btn btn-secondary" onClick={handleClose}>Cancel</button>
+          <button className="btn btn-primary" type="submit">Update Project</button>
+        </Modal.Footer>
+      </form>
+    </Modal>
   );
 }
+
 export default EditProjectModal;
