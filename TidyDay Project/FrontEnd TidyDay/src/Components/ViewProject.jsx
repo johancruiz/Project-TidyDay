@@ -55,7 +55,7 @@ const ViewProject = () => {
       );
 
       if (response.ok) {
-        navigate("/pma/projects/1");
+        navigate(`/pma/projects/${id}`);
         console.log("Deleted");
       }
     } catch (error) {

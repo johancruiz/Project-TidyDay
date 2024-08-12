@@ -141,10 +141,10 @@ function EditProjectModal({ show, handleClose, projectData, setProjectData }) {
                 <Col md={3} sm={4} xs={4}>
                   {" "}
                   <input
-                    type="text"
+                    type="number"
                     name="progress"
                     placeholder="Progress %"
-                    value={`${projectData.progress}%`}
+                    value={`${projectData.progress}`}
                     onChange={handleChange}
                   />
                 </Col>

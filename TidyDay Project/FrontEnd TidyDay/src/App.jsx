@@ -11,7 +11,6 @@ import Home from "./Components/Home";
 import Projects from "./Components/Projects";
 import Tasks from "./Components/Tasks";
 import Calendar from "./Components/Calendar";
-import Reports from "./Components/Reports";
 import ViewProject from "./Components/ViewProject";
 import ViewTask from "./Components/ViewTask";
 import Login from "./Components/Login";
@@ -31,7 +30,6 @@ function App() {
             {/* <Route path="/pma/projects" element={<Projects />} /> Puedes mantener esta si es necesario */}
             <Route path="/pma/tasks" element={<Tasks />} />
             <Route path="/pma/calendar" element={<Calendar />} />
-            <Route path="/pma/reports" element={<Reports />} />
             <Route path="/pma/viewProject/:id" element={<ViewProject />} />
             <Route path="/pma/viewTask/:id" element={<ViewTask />} />
           </Routes>
