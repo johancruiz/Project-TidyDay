@@ -68,17 +68,16 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
     <Modal  show={show} className="modal" onHide={handleClose} size="lg">
       <form  action="" className="form" onSubmit={handleSubmit}>
         <div  className="container" id="color_form">
-          <Modal.Header closeButton className="custom-modal-header p-3">
-            <Modal.Title id="colorform1"  >
-              <h6>New project</h6>
+          <Modal.Header  className="custom-modal-header p-3">
+            <Modal.Title  >
+              <h6 id="title_form">New project</h6> 
             </Modal.Title>
           </Modal.Header>
-          <Modal.Body>
-            <input
-              type="text"
-              name="projectName"
-              placeholder="Project name"
-              style={{ fontSize: "18px", color: "#020817" }}
+          <Modal.Body id="bordes1">
+          <input
+            type="text"
+            name="projectName"
+            placeholder="Project name"
               className="fw-bold project-name-input m-1"
               value={data.projectName}
               onChange={handleOnchange}
@@ -89,7 +88,12 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
               type="text"
               name="summary"
               placeholder="Add a short summary"
-              style={{ fontSize: "15px", fontWeight: "600" }}
+              style={{ fontSize: "15px",
+                fontWeight: "600",
+                border:"1",
+                color: "white",
+                
+              }}
               className=" project-name-input m-1"
               value={data.summary}
               onChange={handleOnchange}
@@ -100,13 +104,20 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
                 <input
                   type="text"
                   name="addedDate"
-                  placeholder="Starting date"
+                  placeholder="Starting date" 
                   ref={ref}
                   onFocus={() => (ref.current.type = "date")}
                   onBlur={() => (ref.current.type = "text")}
                   value={data.addedDate}
                   onChange={handleOnchange}
                   required
+                  style={{
+                    height: "28px",
+                    width: "160px",
+                    borderRadius: "2px",
+                    color: "white",
+                    background:"#020817"
+                  }}
                 />
               </Col>
               <Col md={3} sm={4} xs={4}>
@@ -120,7 +131,15 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
                   onFocus={() => (ref2.current.type = "date")}
                   onBlur={() => (ref2.current.type = "text")}
                   required
+                  style={{
+                    height: "28px",
+                    width: "160px",
+                    borderRadius: "2px",
+                    color: "white",
+                    background:"#020817"
+                  }}
                 />
+                
               </Col>
               <Col md={3} sm={4} xs={4}>
                 <div className="dropdown">
@@ -132,6 +151,7 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
                       width: "160px",
                       border: "1px solid #e8e8e8",
                       borderRadius: "2px",
+                      color: "white"
                     }}
                   >
                     {selectedValue}
@@ -174,6 +194,13 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
                   placeholder="Progress %"
                   value={data.progress}
                   onChange={handleOnchange}
+                  style={{
+                    height: "28px",
+                    width: "160px",
+                    borderRadius: "2px",
+                    color: "white",
+                    background:"#020817"
+                  }}
                 />
               </Col>
             </div>
@@ -183,9 +210,13 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
               cols=""
               rows="5"
               placeholder=" Write a description or a project brief..."
-              style={{ border: "none", width: "100%" }}
+              style={{ border: "none", width: "100%",
+                background:"#020817",
+                color:"white"
+               }}
               value={data.description}
               onChange={handleOnchange}
+              
             />
             <hr />
             <textarea
@@ -193,7 +224,10 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
               cols=""
               rows="5"
               placeholder=" Write some notes..."
-              style={{ border: "none", width: "100%" }}
+              style={{ border: "none", width: "100%",
+                background:"#020817",
+                color:"white"
+               }}
               value={data.notes}
               onChange={handleOnchange}
             />
