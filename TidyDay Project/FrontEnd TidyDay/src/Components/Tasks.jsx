@@ -68,21 +68,7 @@ function Tasks() {
   const tasksTodo = tasks.filter((task) => task.status === "to-do");
   const completedTasks = tasks.filter((task) => task.status === "completed");
 
-  const handleDeleteTask = async (task) => {
-    try {
-      const response = await fetch(`http://localhost:9090/tasks/deleteTask/${task.id}`, {
-        method: "DELETE",
-      });
-      if (response.ok) {
-        setTasks((prevTasks) => prevTasks.filter((t) => t.id !== task.id));
-        setNotification("Task deleted successfully!");
-      } else {
-        console.log("Failed to delete task");
-      }
-    } catch (error) {
-      console.log("Error deleting task:", error);
-    }
-  };
+  
 
   const showNotification = (message) => {
     setNotification(message);
