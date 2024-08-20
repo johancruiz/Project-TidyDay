@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import Sidebar from "./Sidebar";
 import TopBar from "./TopBar";
+import { Modal, ModalBody, ModalFooter, ModalHeader, Button, ModalTitle } from "react-bootstrap";
 
 function ViewTask() {
   const { id } = useParams();
@@ -15,7 +16,7 @@ function ViewTask() {
     const getTaskAndProjects = async () => {
       try {
         // Fetch the task details
-        const taskResponse = await fetch(`http://localhost:9090/tasks/getTask/${id}`, {
+        const taskResponse = await fetch(`http://localhost:9090/tasks/taskById/${id}`, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
         });
@@ -44,28 +45,31 @@ function ViewTask() {
     getTaskAndProjects();
   }, [id]);
 
-  const handleDelete = async () => {
-    try {
-      const response = await fetch(`http://localhost:9090/tasks/deleteTask/${id}`, {
-        method: "DELETE",
-      });
-      if (response.ok) {
-        navigate("/pma/tasks");
-      } else {
-        console.log("Failed to delete task");
-      }
-    } catch (error) {
-      console.log("Error deleting task:", error);
-    }
-  };
-
-  const handleEdit = async () => {
-    // Logic to handle task editing
+  const handleEdit = () => {
+    // Implement task editing logic
     console.log("Edit task logic goes here");
   };
 
-  const handleCloseDeleteModal = () => setDeleteModal(false);
-  const handleShowDeleteModal = () => setDeleteModal(true);
+  const deleteTask = async () => {
+    try {
+      const response = await fetch(`http://localhost:9090/tasks/deleteTask/${id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (response.ok) {
+        setNotification("Task successfully deleted.");
+        setTimeout(() => navigate(`/pma/tasks`), 2000); // Redirect after 2 seconds
+      } else {
+        setNotification("Failed to delete task.");
+      }
+    } catch (error) {
+      console.log("Failed to delete task", error);
+      setNotification("Failed to delete task.");
+    } finally {
+      setDeleteModal(false);
+    }
+  };
 
   return (
     <>
@@ -74,14 +78,14 @@ function ViewTask() {
         <TopBar />
         <div className="container mt-3">
           <div className="view-task">
-            <h2 className="fw-bold mb-4">Task Details</h2>
+            <h2 className="fw-bold mb-4" id="color_fondo" >Task Details</h2>
             <div className="task-details">
-              <p><strong>Task Name:</strong> {task.taskName}</p>
-              <p><strong>Description:</strong> {task.description}</p>
-              <p><strong>Status:</strong> {task.status}</p>
-              <p><strong>Priority:</strong> {task.priority}</p>
+              <p id="color_fondo" ><strong id="color_fondo" >Task Name:</strong> {task.taskName}</p>
+              <p id="color_fondo"><strong id="color_fondo">Description:</strong> {task.description}</p>
+              <p id="color_fondo"><strong id="color_fondo">Status:</strong> {task.status}</p>
+              <p id="color_fondo"><strong id="color_fondo">Priority:</strong> {task.priority}</p>
             </div>
-            <h3 className="mt-4">Associated Projects</h3>
+            <h3 className="mt-4" id="color_fondo">Associated Projects</h3>
             {projects.length > 0 ? (
               <ul className="list-group">
                 {projects.map((project) => (
@@ -92,21 +96,22 @@ function ViewTask() {
                 ))}
               </ul>
             ) : (
-              <p>No projects associated with this task.</p>
+              <p id="color_fondo" >No projects associated with this task.</p>
             )}
-            <button className="btn btn-primary mt-3" onClick={handleEdit}>Edit Task</button>
-            <button className="btn btn-danger ms-2 mt-3" onClick={handleShowDeleteModal}>Delete Task</button>
+            <Button variant="info" className="mb-1" onClick={handleEdit}>Edit Task</Button>
+            <Button variant="danger" className="mb-1" onClick={() => setDeleteModal(true)}>Delete Task</Button>
           </div>
-          {deleteModal && (
-            <div className="modal">
-              <div className="modal-content">
-                <h4>Are you sure you want to delete this task?</h4>
-                <button className="btn btn-danger" onClick={handleDelete}>Delete</button>
-                <button className="btn btn-secondary ms-2" onClick={handleCloseDeleteModal}>Cancel</button>
-              </div>
-            </div>
-          )}
-          {notification && <div className="notification">{notification}</div>}
+          {notification && <div className="notification" style={{ color: "005cc8" }}>{notification}</div>}
+          <Modal show={deleteModal} onHide={() => setDeleteModal(false)}>
+            <ModalHeader closeButton>
+              <ModalTitle><h2>Confirm Delete</h2></ModalTitle>
+            </ModalHeader>
+            <ModalBody style={{ color: "005cc8" }} >Are you sure you want to delete this task?</ModalBody>
+            <ModalFooter>
+              <Button variant="secondary" onClick={() => setDeleteModal(false)}>Cancel</Button>
+              <Button variant="danger" onClick={deleteTask}>Delete</Button>
+            </ModalFooter>
+          </Modal>
         </div>
       </div>
     </>
