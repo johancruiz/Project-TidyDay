@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import smallLogo from "../assets/smallLogo.png";
 import { useDispatch } from "react-redux";
 import { setUserName } from "../Redux/Action";
+import tidyday3 from '../assets/tidyday3.png';
+
 
 function SignUp() {
   const navigate = useNavigate();
@@ -55,13 +56,13 @@ function SignUp() {
       <section className="w-95 d-flex justify-content-center pb-4 p-4">
         <form className="card log-in-card" onSubmit={handleSubmit}>
           <div data-mdb-input-init className="form-outline mb-4 text-center">
-            <img src={smallLogo} alt="" className="logo" />
+            <img src={tidyday3} alt="" className="logo" />
             <br />
-            <small>Create a new account to get started with myWorkSpace</small>
+            <small style={{color: '#fff'}}>Create a new account to get started with myWorkSpace</small>
           </div>
 
           <div data-mdb-input-init className="form-outline mb-4">
-            <h6>Username</h6>
+            <h6 style={{color: '#fff'}}>Username</h6>
             <input
               type="text"
               className="form-control"
@@ -73,7 +74,7 @@ function SignUp() {
           </div>
 
           <div data-mdb-input-init className="form-outline mb-4">
-            <h6>Email</h6>
+            <h6 style={{color: '#fff'}}>Email</h6>
             <input
               type="email"
               className="form-control"
@@ -85,7 +86,7 @@ function SignUp() {
           </div>
 
           <div data-mdb-input-init className="form-outline mb-4">
-            <h6>Password</h6>
+            <h6 style={{color: '#fff'}}>Password</h6>
             <input
               type="password"
               className="form-control"
@@ -105,7 +106,7 @@ function SignUp() {
           </button>
 
           <div className="text-center">
-            <p>
+            <p style={{color: '#fff'}}>
               Already have an account? <Link to="/pma/login">Sign in here</Link>
             </p>
           </div>
