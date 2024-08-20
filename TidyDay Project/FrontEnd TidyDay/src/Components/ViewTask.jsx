@@ -24,7 +24,7 @@ function ViewTask() {
           const taskResult = await taskResponse.json();
           setTask(taskResult);
 
-          // Fetch the projects associated with the task
+          // Fetch the projects associated with the taskkkkkkk
           const projectsResponse = await fetch(`http://localhost:9090/tasks/getProjectsByTask/${id}`, {
             method: "GET",
             headers: { "Content-Type": "application/json" },
