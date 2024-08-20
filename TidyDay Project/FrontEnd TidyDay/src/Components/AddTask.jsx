@@ -110,7 +110,6 @@ const AddTask = ({
             <Form.Label style={{ fontWeight: "bold" }}>Task Name</Form.Label>
             <Form.Control
               type="text"
-              placeholder="Enter task name..."
               name="taskName"
               value={taskData.taskName}
               onChange={handleChange}
@@ -119,6 +118,7 @@ const AddTask = ({
                 padding: "10px",
                 borderRadius: "4px",
                 boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+                color:"black"
               }}
             />
           </Form.Group>
