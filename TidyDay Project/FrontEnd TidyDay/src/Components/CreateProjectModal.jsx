@@ -68,7 +68,7 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
     <Modal  show={show} className="modal" onHide={handleClose} size="lg">
       <form  action="" className="form" onSubmit={handleSubmit}>
         <div  className="container" id="color_form">
-          <Modal.Header  className="custom-modal-header p-3">
+          <Modal.Header closeButton className="custom-modal-header p-3">
             <Modal.Title  >
               <h6 id="title_form">New project</h6> 
             </Modal.Title>

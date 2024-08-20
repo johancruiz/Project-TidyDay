@@ -194,6 +194,9 @@ input::placeholder {
   color: white;
   font-family: "Playfair Display", system-ui;
 }
+.btn-close{
+  background-color: #005cc8 !important;
+}
 #title_form{
   font-size: 120%;
   font-family: "Playfair Display", system-ui;
