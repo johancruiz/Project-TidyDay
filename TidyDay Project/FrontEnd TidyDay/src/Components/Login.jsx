@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUserName } from '../Redux/Action';
-import smallLogo from '../assets/smallLogo.png';
+import tidyday3 from '../assets/tidyday3.png';
 import { Link } from 'react-router-dom';
 
 function Login() {
@@ -54,61 +54,62 @@ function Login() {
   };
 
   return (
-    <div className="login-page m-0">
-      <section className="w-95 d-flex justify-content-center pb-4 p-4">
-        <form className="card log-in-card" onSubmit={login}>
-          <div data-mdb-input-init className="form-outline mb-4 text-center">
-            <img src={smallLogo} alt="" className="logo" />
-          </div>
-
-          <div data-mdb-input-init className="form-outline mb-4">
-            <h6>Email</h6>
-            <input
-              type="email"
-              className="form-control"
-              value={email}
-              name="email"
-              onChange={handleChange}
-              required
-            />
-          </div>
-
-          <div data-mdb-input-init className="form-outline mb-4">
-            <h6>Password</h6>
-            <input
-              type="password"
-              className="form-control"
-              value={password}
-              name="password"
-              onChange={handleChange}
-            />
-          </div>
-          <small>
-            I agree to the <a href="#">workspace customer agreement</a>,<br />
-            which incorporates by reference the AI product-specific terms and
-            acknowledge the <a href="#">privacy policy</a>
-          </small>
-
-          <button
-            data-mdb-ripple-init
-            type="submit"
-            className="btn btn-primary btn-block mb-4 mt-3"
-          >
-            Sign in
-          </button>
-
-          <div className="text-center">
-            <p>Or sign in with:</p>
-            {/* Social buttons here */}
-          </div>
-          <div className="text-center">
-            <p>
-              Don’t have an account? <Link to="/pma/signup">Sign up here</Link> {/* Ajustado */}
-            </p>
-          </div>
-        </form>
-      </section>
-    </div>
+    <div className="login-page">
+    <section className="w-95 d-flex justify-content-center pb-4 p-4">
+      <form className="card log-in-card" onSubmit={login}>
+        <div data-mdb-input-init className="form-outline mb-4 text-center">
+          <img src={tidyday3} alt="" className="logo" />
+        </div>
+  
+        <div data-mdb-input-init className="form-outline mb-4">
+          <h6 style={{color: '#fff'}}>Email</h6>
+          <input
+            type="email"
+            className="form-control"
+            value={email}
+            name="email"
+            onChange={handleChange}
+            required
+          />
+        </div>
+  
+        <div data-mdb-input-init className="form-outline mb-4">
+          <h6 style={{color: '#fff'}}>Password</h6>
+          <input 
+            type="password"
+            className="form-control"
+            value={password}
+            name="password"
+            onChange={handleChange}
+          />
+        </div>
+        <small style={{color: '#fff'}}> 
+          I agree to the <a href="#">workspace customer agreement</a>,<br />
+          which incorporates by reference the AI product-specific terms and
+          acknowledge the <a href="#">privacy policy</a>
+        </small>
+  
+        <button
+          data-mdb-ripple-init
+          type="submit"
+          className="btn btn-primary btn-block mb-4 mt-3"
+        >
+          Sign in
+        </button>
+  
+        <div className="text-center">
+          <p style={{color: '#fff'}}>Or sign in with:</p>
+          {/* Social buttons here */}
+        </div>
+        <div className="text-center">
+          <p style={{color: '#fff'}}> 
+            Don’t have an account? <Link to="/pma/signup">Sign up here</Link> {/* Ajustado */}
+          </p>
+        </div>
+      </form>
+    </section>
+  </div>
+  
   );
 }
 

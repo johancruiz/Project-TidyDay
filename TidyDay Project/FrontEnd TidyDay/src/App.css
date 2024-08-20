@@ -426,9 +426,20 @@ input::placeholder {
 }
 .log-in-card {
   padding: 6%;
+  background-color: #020817 !important;
+  border: 2px solid #414651 !important;
+  box-shadow: 0px 5px 15px rgba(151, 148, 148, 0.3);
+  border-radius: 8px;
+  margin: auto;
+
 }
 .login-page {
-  background: linear-gradient(to right, #eff5ff, #bedaff);
+  background: linear-gradient(to right, #020817, #020817);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Hace que el contenedor ocupe toda la altura de la ventana */
+  margin: auto; /* Asegúrate de eliminar márgenes */
 }
 
 .code-input input {
