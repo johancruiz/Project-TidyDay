@@ -1,0 +1,131 @@
+/* MyCalendar.css */
+.modal-overlay {
+  background-color: rgba(175, 18, 18, 0.75);
+}
+
+.modal {
+  background: #020817;
+  padding: 20px;
+  max-width: 800px;
+  margin: 5% auto;
+  border-radius: 8px;
+  box-shadow: 0px 5px 15px rgba(104, 104, 104, 0.3);
+  position: relative;
+  color: #fff;
+}
+
+.modal-title {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffffff;
+  text-align: center;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-label {
+  margin-bottom: 15px;
+  font-weight: bold;
+  color: rgb(255, 255, 255);
+}
+
+.modal-input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 4px;
+  border: 1px solid #801818;
+  font-size: 16px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.modal-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.modal-button-submit {
+  background-color: #28a745;
+  color: black;
+}
+
+.modal-button-submit:hover {
+  background-color: #218838;
+}
+
+.modal-button-cancel {
+  background-color: #dc3545;
+  color: black;
+}
+
+.modal-button-cancel:hover {
+  background-color: #c82333;
+}
+
+/* Estilo para desenfocar el contenido detrás del modal */
+.calendar-container {
+  transition: filter 0.3s ease;
+}
+
+.modal-open .calendar-container {
+  filter: blur(5px);
+  pointer-events: none; /* Desactiva la interacción con el calendario */
+}
+
+/* Evitar desplazamiento de la página cuando el modal está abierto */
+/* MyCalendar.css */
+body, html {
+  height: 100%;
+  margin: 0;
+  background-color: #020817; /* Color de fondo claro */
+}
+
+#root {
+  min-height: 100%;
+  background-color: #020817; /* Asegura que el fondo cubra toda la página */
+}
+
+.custom-modal .modal-content {
+  background: #020817;
+  padding: 20px;
+  max-width: 500px;
+  margin: 5% auto;
+  border-radius: 8px;
+  box-shadow: 0px 5px 15px rgba(151, 148, 148, 0.3);
+}
+
+.custom-modal .modal-header .modal-title {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.custom-modal .modal-body {
+  padding: 20px;
+}
+
+.custom-modal .modal-footer .btn {
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.custom-modal .modal-footer .btn-secondary {
+  background-color: #ccc;
+}
+
+.custom-modal .modal-footer .btn-primary {
+  background-color: #9c9c9c;
+  color: black;
+}

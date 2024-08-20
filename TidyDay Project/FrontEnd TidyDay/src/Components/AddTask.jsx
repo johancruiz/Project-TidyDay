@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import { Modal, Col } from "react-bootstrap";
-
+import { Modal, Col, Row, Form, Button } from "react-bootstrap";
+import"../Components/MyCalendar.css";
 const AddTask = ({
   show,
   handleClose,
   showNotification,
   setAddSuccess,
-    // Asegúrate de que esta prop esté definida
+  onTaskAdded, 
 }) => {
   const [taskData, setTaskData] = useState({
     taskName: "",
@@ -41,11 +41,11 @@ const AddTask = ({
       }
     };
     getProjects();
-  }, []);
+  }, [userId]);
 
   const addTask = async (e) => {
-    
     e.preventDefault();
+
     if (!userId) {
       console.log("User ID is not defined");
       return;
@@ -68,9 +68,7 @@ const AddTask = ({
           setAddSuccess("Task added successfully!");
           showNotification("Task added successfully!");
 
-          setTimeout(() => {
-            window.location.reload();
-          }, 700);
+          onTaskAdded(newTask);
         } else {
           console.log("Failed to add task");
         }
@@ -93,81 +91,108 @@ const AddTask = ({
   };
 
   return (
-    <>
-      <Modal show={show} onHide={handleClose} size="md">
-        <form onSubmit={addTask}>
-          <Modal.Header closeButton>
-            <h6 className="fw-bold">Add new task</h6>
-          </Modal.Header>
-          <Modal.Body className="m-2">
-            <Col></Col>
-            <input
+    <Modal
+      show={show}
+      onHide={handleClose}
+      centered
+      className="fade"
+      style={{
+        backgroundColor: "rgba(0, 0, 0, 0.75)",
+      }}
+      dialogClassName="custom-modal"
+    >
+      <Form onSubmit={addTask}>
+        <Modal.Header closeButton>
+          <Modal.Title style={{ fontSize: "24px", fontWeight: "bold" }}>Add New Task</Modal.Title>
+        </Modal.Header>
+        <Modal.Body style={{ padding: "20px" }}>
+          <Form.Group className="mb-3">
+            <Form.Label style={{ fontWeight: "bold" }}>Task Name</Form.Label>
+            <Form.Control
               type="text"
-              placeholder="Task name..."
-              className="input-task"
+              placeholder="Enter task name..."
               name="taskName"
               value={taskData.taskName}
               onChange={handleChange}
+              required
+              style={{
+                padding: "10px",
+                borderRadius: "4px",
+                boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+              }}
             />
-            <br />
-            <div className="dropdown m-1 row">
-              <Col md={3}>
-                <h6 className="mt-1">Project</h6>
-              </Col>
-              <Col md={6}>
-                <select
-                  value={projectId}
-                  onChange={handleProjectChange}
-                  className="form-select"
-                >
-                  <option value="">--Select project--</option>
-                  {projects.map((project) => (
-                    <option key={project.id} value={project.id}>
-                      {project.projectName}
-                    </option>
-                  ))}
-                </select>
-              </Col>
-            </div>
-            <div className="priority m-1 row">
-              <Col md={3}>
-                <h6 className="mt-1">Priority</h6>
-              </Col>
-              <Col md={9}>
-                <select
-                  name="priority"
-                  value={taskData.priority}
-                  onChange={handleChange}
-                  className="priority-select"
-                  style={{ width: "155px", border: "solid #ccc 1px" }}
-                >
-                  <option value="low">Low</option>
-                  <option value="high">High</option>
-                </select>
-              </Col>
-            </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <div className="">
-              <button
-                className="btn btn-secondary m-1"
-                onClick={handleClose}
-                type="button"
+          </Form.Group>
+
+          <Form.Group as={Row} className="mb-3">
+            <Form.Label column sm="3" style={{ fontWeight: "bold" }}>Project</Form.Label>
+            <Col sm="9">
+              <Form.Select
+                value={projectId}
+                onChange={handleProjectChange}
+                required
+                style={{
+                  padding: "10px",
+                  borderRadius: "4px",
+                  boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+                }}
               >
-                Cancel
-              </button>
-              <button
-                className="btn"
-                type="submit"
-                style={{ backgroundColor: "#ff0854", color: "#fff" }}
+                <option value="">--Select project--</option>
+                {projects.map((project) => (
+                  <option key={project.id} value={project.id}>
+                    {project.projectName}
+                  </option>
+                ))}
+              </Form.Select>
+            </Col>
+          </Form.Group>
+
+          <Form.Group as={Row} className="mb-3">
+            <Form.Label column sm="3" style={{ fontWeight: "bold" }}>Priority</Form.Label>
+            <Col sm="9">
+              <Form.Select
+                name="priority"
+                value={taskData.priority}
+                onChange={handleChange}
+                style={{
+                  padding: "10px",
+                  borderRadius: "4px",
+                  boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
+                }}
               >
-                Save task
-              </button>
-            </div>
-          </Modal.Footer>
-        </form>
-      </Modal>
-    </>
+                <option value="low">Low</option>
+                <option value="high">High</option>
+              </Form.Select>
+            </Col>
+          </Form.Group>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={handleClose}
+            style={{
+              padding: "10px 20px",
+              borderRadius: "4px",
+              fontWeight: "bold",
+              backgroundColor: "#2c2c2c"
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            type="submit"
+            style={{
+              backgroundColor: "#0b2166",
+              color: "#fff",
+              padding: "10px 20px",
+              borderRadius: "4px",
+              fontWeight: "bold",
+            }}
+          >
+            Save Task
+          </Button>
+        </Modal.Footer>
+      </Form>
+    </Modal>
   );
 };
 

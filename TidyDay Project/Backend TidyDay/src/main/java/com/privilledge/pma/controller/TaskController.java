@@ -97,8 +97,7 @@ public class TaskController {
         User user = userRepo.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         return ResponseEntity.ok(taskService.getTaskByUser(user));
     }
-
-    // Nuevo método para obtener todos los proyectos
+    
     @GetMapping("/getAllProjects")
     public ResponseEntity<List<Project>> getAllProjects() {
         List<Project> projects = projectsRepo.findAll(); // Usa projectsRepo para obtener todos los proyectos

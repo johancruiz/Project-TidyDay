@@ -1,4 +1,3 @@
-// src/Components/Projects.jsx
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
@@ -75,18 +74,18 @@ function Projects() {
   return (
     <>
       <Sidebar/>
-      <div className="main-content">
+      <div className="main-content"id="color_fondo">
         <TopBar />
         <div
           className="card m-3 p-4"
           style={{
-            backgroundColor: "",
+            backgroundColor: "#020817",
             borderRadius: "7px",
             border: "none",
             minHeight: "35rem",
           }}
         >
-          <div className="row" style={{ marginLeft: "0px", marginRight: "0px" }}>
+          <div className="row" style={{ marginLeft: "0px", marginRight: "0px",color:"white" }}>
             <Col md={6} xs={5} sm={6} className="mt-2">
               <h5 className="fw-bold projects-title mt-1">
                 All Projects

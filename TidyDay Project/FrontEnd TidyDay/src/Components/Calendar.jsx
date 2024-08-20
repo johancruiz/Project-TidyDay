@@ -8,7 +8,7 @@ function Calendar() {
   return (
     <>
       <Sidebar />
-      <div className="main-content " style={{ backgroundColor: "#ffffff" }}>
+      <div className="main-content " id="fondocalendar">
         <TopBar />
         <CalendarSetup />
       </div>

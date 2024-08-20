@@ -2,6 +2,7 @@
 import { useRef, useState } from "react";
 import { Modal, Button, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import".././App.css";
 
 function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
   const ref = useRef();
@@ -64,11 +65,11 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
   };
 
   return (
-    <Modal show={show} className="modal" onHide={handleClose} size="lg">
-      <form action="" className="form" onSubmit={handleSubmit}>
-        <div className="container">
+    <Modal  show={show} className="modal" onHide={handleClose} size="lg">
+      <form  action="" className="form" onSubmit={handleSubmit}>
+        <div  className="container" id="color_form">
           <Modal.Header closeButton className="custom-modal-header p-3">
-            <Modal.Title>
+            <Modal.Title id="colorform1"  >
               <h6>New project</h6>
             </Modal.Title>
           </Modal.Header>
@@ -77,7 +78,7 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
               type="text"
               name="projectName"
               placeholder="Project name"
-              style={{ fontSize: "18px", color: "#000" }}
+              style={{ fontSize: "18px", color: "#020817" }}
               className="fw-bold project-name-input m-1"
               value={data.projectName}
               onChange={handleOnchange}

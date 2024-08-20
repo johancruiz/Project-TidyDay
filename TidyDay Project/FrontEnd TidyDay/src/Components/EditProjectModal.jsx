@@ -1,6 +1,8 @@
-import { Modal, Col } from "react-bootstrap";
+import { Modal, Col } from "react-bootstrap"; 
 import { useState } from "react";
 import { useParams } from "react-router";
+import "./MyCalendar.css";
+import".././App.css";
 
 function EditProjectModal({ show, handleClose, projectData, setProjectData }) {
   const [selectedValue, setSelectedValue] = useState(projectData.status);
@@ -42,10 +44,10 @@ function EditProjectModal({ show, handleClose, projectData, setProjectData }) {
   return (
     <Modal show={show} onHide={handleClose} size="lg">
       <form onSubmit={updateProject}>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton id="color_form">
           <Modal.Title>Edit Project</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body id="color_form">
           <input
             type="text"
             name="projectName"
@@ -125,12 +127,14 @@ function EditProjectModal({ show, handleClose, projectData, setProjectData }) {
             value={projectData.notes}
             onChange={handleChange}
           />
-        </Modal.Body>
-        <Modal.Footer>
-          <button className="btn btn-secondary" onClick={handleClose}>Cancel</button>
+           <button className="btn btn-secondary" onClick={handleClose}>Cancel</button>
           <button className="btn btn-primary" type="submit">Update Project</button>
-        </Modal.Footer>
+        
+        </Modal.Body>
+        
+         
       </form>
+      
     </Modal>
   );
 }

@@ -1,4 +1,4 @@
-import smallLogo from "../assets/smallLogo.png";
+import tidyday from "../assets/tidyday.jpg";
 import Video from "../assets/vid.mp4";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -28,7 +28,7 @@ function LandingPage() {
   return (
     <>
       <nav className=" sticky-top">
-        <img src={smallLogo} alt="" className="logo navbar-brand" />
+        <img src={tidyday} alt="" className="logo navbar-brand" />
       </nav>
       <div className=" px-0">
         <div className="bg">

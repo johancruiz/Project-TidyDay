@@ -4,6 +4,7 @@ import TopBar from "./TopBar";
 import { Col } from "react-bootstrap";
 import AddTask from "./AddTask";
 import { useNavigate } from "react-router";
+import "./MyCalendar.css";
 
 function Tasks() {
   const [tasks, setTasks] = useState([]);
@@ -15,12 +16,13 @@ function Tasks() {
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
 
-  
+  const userId = location.state?.userId || localStorage.getItem('userId');
 
   useEffect(() => {
     const getTasks = async () => {
+      if (userId) {
       try {
-        const response = await fetch("http://localhost:9090/tasks/getTasks", {
+        const response = await fetch(`http://localhost:9090/tasks/getTasksByUser?userId=${userId}`, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
         });
@@ -34,6 +36,7 @@ function Tasks() {
       } catch (error) {
         console.log("Failed to fetch data", error);
       }
+    }
     };
     getTasks();
   }, []);
@@ -111,9 +114,9 @@ function Tasks() {
   return (
     <>
       <Sidebar />
-      <div className="main-content">
+      <div className="main-content"id="color_fondo">
         <TopBar />
-        <div className="container tasks-container" style={{ background: "transparent" }}>
+        <div className="container tasks-container">
           <div className="tasks-top">
             <h5 className="fw-bold p-1">
               To do{" "}
@@ -265,7 +268,7 @@ function Tasks() {
         </div>
         {showModal && (
           <AddTask
-            setAddSuccess={setAddSuccess} // Pass the setAddSuccess function to AddTask
+            setAddSuccess={setAddSuccess} 
             handleClose={handleClose}
             show={showModal}
             showNotification={showNotification}
@@ -278,3 +281,4 @@ function Tasks() {
 }
 
 export default Tasks;
+

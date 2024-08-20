@@ -132,15 +132,15 @@ const ViewProject = () => {
                     </svg>
                   </button>
                   <Modal show={deleteModal} size="sm" onHide={hideDeleteModal}>
-                    <ModalHeader
+                    <ModalHeader id="color_fondodelete"
                       closeButton
                       style={{ border: "none" }}
                     ></ModalHeader>
-                    <ModalBody className="text-center">
+                    <ModalBody className="text-center" id="color_fondodelete"> 
                       {" "}
                       <h5>Delete project?</h5>
                     </ModalBody>
-                    <ModalFooter className="text-center">
+                    <ModalFooter id="color_fondodelete" className="text-center">
                       <button
                         className="btn-sm btn btn-info"
                         style={{ color: "#fff", fontSize: "15px" }}

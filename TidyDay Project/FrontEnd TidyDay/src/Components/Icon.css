@@ -8,7 +8,7 @@
 .icon-image {
   cursor: pointer; 
   transition: transform 0.2s ease, color 0.2s ease; 
-  color: #000; 
+  color: #6ea1ff; 
 }
 
 .icon-image:hover {

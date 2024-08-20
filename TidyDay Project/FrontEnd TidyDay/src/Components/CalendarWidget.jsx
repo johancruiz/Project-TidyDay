@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../assets/componentsStyles/calendar.css"; // Import your CSS file for styling
+import "../assets/componentsStyles/calendar.css"; 
 
 const CalendarWidget = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
