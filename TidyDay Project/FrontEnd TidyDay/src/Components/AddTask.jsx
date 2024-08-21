@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react";
 import { Modal, Col, Row, Form, Button } from "react-bootstrap";
-import"../Components/MyCalendar.css";
+import "../Components/MyCalendar.css";
+
 const AddTask = ({
   show,
   handleClose,
   showNotification,
   setAddSuccess,
-  onTaskAdded, 
+  onTaskAdded = () => {}, // Proporciona una función por defecto
 }) => {
   const [taskData, setTaskData] = useState({
     taskName: "",
@@ -18,17 +19,20 @@ const AddTask = ({
   const [projects, setProjects] = useState([]);
   const [projectId, setProjectId] = useState("");
 
-  const userId = location.state?.userId || localStorage.getItem('userId');
+  const userId = location.state?.userId || localStorage.getItem("userId");
 
   useEffect(() => {
     const getProjects = async () => {
       try {
-        const response = await fetch(`http://localhost:9090/projects/getProjectByUser/${userId}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await fetch(
+          `http://localhost:9090/projects/getProjectByUser/${userId}`,
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
         if (response.ok) {
           const projectsData = await response.json();
@@ -54,13 +58,16 @@ const AddTask = ({
     const newTask = { ...taskData, project: { id: projectId }, userId };
     if (taskData.taskName.length > 0 && projectId) {
       try {
-        const response = await fetch(`http://localhost:9090/tasks/addTask?userId=${userId}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newTask),
-        });
+        const response = await fetch(
+          `http://localhost:9090/tasks/addTask?userId=${userId}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(newTask),
+          }
+        );
 
         if (response.ok) {
           console.log("Task added");
@@ -68,6 +75,7 @@ const AddTask = ({
           setAddSuccess("Task added successfully!");
           showNotification("Task added successfully!");
 
+          // Llamar a la función onTaskAdded para actualizar la lista de tareas
           onTaskAdded(newTask);
         } else {
           console.log("Failed to add task");
@@ -103,7 +111,9 @@ const AddTask = ({
     >
       <Form onSubmit={addTask}>
         <Modal.Header closeButton>
-          <Modal.Title style={{ fontSize: "24px", fontWeight: "bold" }}>Add New Task</Modal.Title>
+          <Modal.Title style={{ fontSize: "24px", fontWeight: "bold" }}>
+            Add New Task
+          </Modal.Title>
         </Modal.Header>
         <Modal.Body style={{ padding: "20px" }}>
           <Form.Group className="mb-3">
@@ -118,13 +128,15 @@ const AddTask = ({
                 padding: "10px",
                 borderRadius: "4px",
                 boxShadow: "0px 2px 4px rgba(0, 0, 0, 0.1)",
-                color:"black"
+                color: "black",
               }}
             />
           </Form.Group>
 
           <Form.Group as={Row} className="mb-3">
-            <Form.Label column sm="3" style={{ fontWeight: "bold" }}>Project</Form.Label>
+            <Form.Label column sm="3" style={{ fontWeight: "bold" }}>
+              Project
+            </Form.Label>
             <Col sm="9">
               <Form.Select
                 value={projectId}
@@ -147,7 +159,9 @@ const AddTask = ({
           </Form.Group>
 
           <Form.Group as={Row} className="mb-3">
-            <Form.Label column sm="3" style={{ fontWeight: "bold" }}>Priority</Form.Label>
+            <Form.Label column sm="3" style={{ fontWeight: "bold" }}>
+              Priority
+            </Form.Label>
             <Col sm="9">
               <Form.Select
                 name="priority"
@@ -173,7 +187,7 @@ const AddTask = ({
               padding: "10px 20px",
               borderRadius: "4px",
               fontWeight: "bold",
-              backgroundColor: "#2c2c2c"
+              backgroundColor: "#2c2c2c",
             }}
           >
             Cancel

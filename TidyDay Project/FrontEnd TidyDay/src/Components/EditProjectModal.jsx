@@ -43,7 +43,7 @@ function EditProjectModal({ show, handleClose, projectData, setProjectData }) {
 
   return (
     <Modal show={show} onHide={handleClose} size="lg">
-      <form onSubmit={updateProject}>
+      <form onSubmit={updateProject} >
         <Modal.Header closeButton id="color_form">
           <Modal.Title>Edit Project</Modal.Title>
         </Modal.Header>
@@ -56,6 +56,12 @@ function EditProjectModal({ show, handleClose, projectData, setProjectData }) {
             value={projectData.projectName}
             onChange={handleChange}
             required
+            style={{ fontSize: "15px",
+              fontWeight: "300",
+              border:"1px solid",
+              color:"#fff", 
+              background:"#020817"
+            }}
           />
           <input
             type="text"
@@ -65,6 +71,12 @@ function EditProjectModal({ show, handleClose, projectData, setProjectData }) {
             value={projectData.summary}
             onChange={handleChange}
             required
+            style={{ fontSize: "15px",
+              fontWeight: "300",
+              border:"1px solid",
+              color:"#fff", 
+              background:"#020817"
+            }}
           />
           <div className="row projects-buttons mt-3">
             <Col md={3} sm={4} xs={4}>
@@ -75,6 +87,14 @@ function EditProjectModal({ show, handleClose, projectData, setProjectData }) {
                 value={projectData.addedDate}
                 onChange={handleChange}
                 required
+                style={{
+                  height: "28px",
+                  width: "160px",
+                  borderRadius: "2px",
+                  color: "white",
+                  background:"#020817",
+                  border:"1px solid"
+                }}
               />
             </Col>
             <Col md={3} sm={4} xs={4}>
@@ -85,6 +105,14 @@ function EditProjectModal({ show, handleClose, projectData, setProjectData }) {
                 value={projectData.dueDate}
                 onChange={handleChange}
                 required
+                style={{
+                  height: "28px",
+                  width: "160px",
+                  borderRadius: "2px",
+                  color: "white",
+                  background:"#020817",
+                  border:"1px solid"
+                }}
               />
             </Col>
             <Col md={3} sm={4} xs={4}>
@@ -92,6 +120,15 @@ function EditProjectModal({ show, handleClose, projectData, setProjectData }) {
                 name="status"
                 value={selectedValue}
                 onChange={(e) => setSelectedValue(e.target.value)}
+                style={{
+                  height: "28px",
+                  width: "160px",
+                  borderRadius: "2px",
+                  color: "white",
+                  background:"#020817",
+                  border:"1px solid",
+                  fontSize:"12.5px"
+                }}
                 className="form-select"
               >
                 <option value="Not started">Not started</option>
@@ -106,6 +143,14 @@ function EditProjectModal({ show, handleClose, projectData, setProjectData }) {
                 placeholder="Progress %"
                 value={projectData.progress || ""}
                 onChange={handleChange}
+                style={{
+                  height: "28px",
+                  width: "160px",
+                  borderRadius: "2px",
+                  color: "white",
+                  background:"#020817",
+                  border:"1px solid"
+                }}
               />
             </Col>
           </div>
@@ -117,6 +162,12 @@ function EditProjectModal({ show, handleClose, projectData, setProjectData }) {
             className="w-100"
             value={projectData.description}
             onChange={handleChange}
+            style={{ fontSize: "15px",
+              fontWeight: "300",
+              border:"1px solid",
+              color:"#fff" , 
+              background:"#020817"
+            }}
           />
           <hr />
           <textarea
@@ -126,10 +177,44 @@ function EditProjectModal({ show, handleClose, projectData, setProjectData }) {
             className="w-100"
             value={projectData.notes}
             onChange={handleChange}
+            style={{ fontSize: "15px",
+              fontWeight: "300",
+              border:"1px solid",
+              color:"#fff", 
+              background:"#020817"
+            }}
           />
-           <button className="btn btn-secondary" onClick={handleClose}>Cancel</button>
-          <button className="btn btn-primary" type="submit">Update Project</button>
-        
+            <div
+              className="row"
+              style={{ display: "flex", justifyContent: "flex-end" }}
+            >
+              <div
+                className="btn btn-secondary m-1"
+                style={{ width: "fit-content",
+                  padding: "10px 20px",
+                  borderRadius: "4px",
+                  fontWeight: "bold",
+                  backgroundColor: "#2c2c2c"
+                }}
+                onClick={handleClose}
+              >
+                Cancel
+              </div>
+              <button
+                className="btn m-1"
+                style={{
+                  width: "fit-content",
+                    backgroundColor: "#0b2166",
+                    color: "#fff",
+                    padding: "10px 20px",
+                    borderRadius: "4px",
+                    fontWeight: "bold",
+                }}
+                type="submit"
+              >
+                Add Project
+              </button>
+            </div>
         </Modal.Body>
         
          

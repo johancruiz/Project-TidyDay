@@ -74,7 +74,7 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
               <h6 id="title_form">New project</h6> 
             </Modal.Title>
           </Modal.Header>
-          <Modal.Body id="bordes1">
+          <Modal.Body >
           <input
             type="text"
             name="projectName"
@@ -83,6 +83,12 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
               value={data.projectName}
               onChange={handleOnchange}
               required
+              style={{ fontSize: "15px",
+                fontWeight: "300",
+                border:"1px solid",
+                color:"#fff", 
+                background:"#020817"
+              }}
             />
             <br />
             <input
@@ -92,7 +98,8 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
               style={{ fontSize: "15px",
                 fontWeight: "300",
                 border:"1px solid",
-                color:"black" 
+                color:"#fff", 
+                background:"#020817"
               }}
               className=" project-name-input m-1"
               value={data.summary}
@@ -116,7 +123,8 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
                     width: "160px",
                     borderRadius: "2px",
                     color: "white",
-                    background:"#020817"
+                    background:"#020817",
+                    border:"1px solid"
                   }}
                 />
               </Col>
@@ -136,7 +144,8 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
                     width: "160px",
                     borderRadius: "2px",
                     color: "white",
-                    background:"#020817"
+                    background:"#020817",
+                    border:"1px solid"
                   }}
                 />
                 
@@ -149,9 +158,11 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
                     style={{
                       height: "28px",
                       width: "160px",
-                      border: "1px solid #e8e8e8",
                       borderRadius: "2px",
-                      color: "white"
+                      color: "white",
+                      background:"#020817",
+                      border:"1px solid",
+                      fontSize:"14px"
                     }}
                   >
                     {selectedValue}
@@ -159,10 +170,12 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
                   <ul className="dropdown-menu">
                     <li
                       className="dropdown-item"
+                      
                       onClick={() => {
                         handleSelectedValue("Not-started");
                         setData((prevData) => ({ ...prevData, status: "Not-started" }));
                       }}
+                      
                     >
                       Not started
                     </li>
@@ -199,7 +212,8 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
                     width: "160px",
                     borderRadius: "2px",
                     color: "white",
-                    background:"#020817"
+                    background:"#020817",
+                    border:"1px solid"
                   }}
                 />
               </Col>
