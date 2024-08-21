@@ -119,7 +119,7 @@ function EditTask({ handleClose, show, taskData, setTaskData, setAddSuccess }) {
           <button
             className="btn"
             type="submit"
-            style={{ backgroundColor: "#ff0854", color: "#fff" }}
+            style={{ backgroundColor: "#0b5ed7", color: "#fff" }}
           >
             Save Task
           </button>

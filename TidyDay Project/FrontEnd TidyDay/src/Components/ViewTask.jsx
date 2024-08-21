@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import Sidebar from "./Sidebar";
 import TopBar from "./TopBar";
-import { Modal, Button } from "react-bootstrap";
-import EditTask from "./EditTask"; // Asegúrate de que la ruta sea correcta
+import { Modal, Button, Card, Alert, Badge } from "react-bootstrap";
+import EditTask from "./EditTask";
 
 function ViewTask() {
   const { id } = useParams();
@@ -31,7 +31,7 @@ function ViewTask() {
         if (response.ok) {
           const taskResult = await response.json();
           setTask(taskResult);
-          setTaskData(taskResult); // Inicializa taskData con los datos de la tarea
+          setTaskData(taskResult);
         } else {
           console.log("Failed to fetch task");
         }
@@ -80,33 +80,50 @@ function ViewTask() {
       <Sidebar />
       <div className="main-content">
         <TopBar />
-        <div className="container mt-3">
-          <div className="view-task">
-            <h2 className="fw-bold mb-4" id="color_fondo">Task Details</h2>
-            <div className="task-details">
-              <p id="color_fondo"><strong>Task Name:</strong> {task.taskName}</p>
-              <p id="color_fondo"><strong>Description:</strong> {task.description}</p>
-              <p id="color_fondo"><strong>Status:</strong> {task.status}</p>
-              <p id="color_fondo"><strong>Priority:</strong> {task.priority}</p>
-            </div>
-            <h3 className="mt-4" id="color_fondo">Associated Project</h3>
-            {task.project ? (
-              <div className="list-group">
-                <p><strong>Project Name:</strong> {task.project.projectName}</p>
-                <p><strong>Status:</strong> {task.project.status}</p>
+        <div className="container mt-4">
+          <Card className="shadow-sm" style={{ backgroundColor: "#020817", color: "#fff" }}>
+            <Card.Header className=" text-light" style={{ backgroundColor: "#0b5ed7", color: "#fff" }}>
+              <h4>Task Details</h4>
+            </Card.Header>
+            <Card.Body>
+              <div className="task-details">
+                <h5 className="fw-bold mb-3">Task Name: <span >{task.taskName}</span></h5>
+                <hr className="my-4" />
+                <p className="mb-4"><strong>Description:</strong> {task.description}</p>
+                <hr className="my-4" />
+                <div className="mb-4">
+                  <strong>Status:</strong> <Badge pill bg={task.status === "Completed" ? "success" : "warning"}>{task.status}</Badge>
+                  <hr className="my-4" />
+                </div>
+                <div className="mb-4">
+                  <strong>Priority:</strong> <Badge pill bg={task.priority === "High" ? "danger" : "info"}>{task.priority}</Badge>
+                  <hr className="my-4" />
+                </div>
               </div>
-            ) : (
-              <p id="color_fondo">No project associated with this task.</p>
-            )}
-            <Button variant="info" className="mb-1" onClick={handleEditClick}>Edit Task</Button>
-            <Button variant="danger" className="mb-1" onClick={() => setDeleteModal(true)}>Delete Task</Button>
-          </div>
-          {notification && <div className="notification" style={{ color: "005cc8" }}>{notification}</div>}
+              <h6 className="fw-bold mb-3">Associated Project</h6>
+              
+              {task.project ? (
+                <div className="list-group">
+                  <p className="mb-2"><strong>Project Name:</strong> {task.project.projectName}</p>
+                  
+                  <p className="mb-0"><strong>Status:</strong> <Badge pill bg={task.project.status === "Active" ? "success" : "secondary"}>{task.project.status}</Badge></p>
+                </div>
+              ) : (
+                <p className="mb-0">No project associated with this task.</p>
+              )}
+              <div className="mt-4">
+              <hr className="my-4" />
+                <Button variant="primary" className="me-2" onClick={handleEditClick}>Edit Task</Button>
+                <Button variant="danger" onClick={() => setDeleteModal(true)}>Delete Task</Button>
+              </div>
+            </Card.Body>
+          </Card>
+          {notification && <Alert variant="info" className="mt-3">{notification}</Alert>}
           <Modal show={deleteModal} onHide={() => setDeleteModal(false)}>
             <Modal.Header closeButton>
-              <Modal.Title><h2>Confirm Delete</h2></Modal.Title>
+              <Modal.Title>Confirm Delete</Modal.Title>
             </Modal.Header>
-            <Modal.Body style={{ color: "005cc8" }}>Are you sure you want to delete this task?</Modal.Body>
+            <Modal.Body>Are you sure you want to delete this task?</Modal.Body>
             <Modal.Footer>
               <Button variant="secondary" onClick={() => setDeleteModal(false)}>Cancel</Button>
               <Button variant="danger" onClick={deleteTask}>Delete</Button>

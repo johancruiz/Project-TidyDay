@@ -12,15 +12,13 @@ function Tasks() {
   const [notification, setNotification] = useState("");
   const [addSuccess, setAddSuccess] = useState(""); // State for add success message
   const navigate = useNavigate();
+  const userId = location.state?.userId || localStorage.getItem('userId');
 
   const handleClose = () => setShowModal(false);
   const handleShow = () => setShowModal(true);
 
-  const userId = location.state?.userId || localStorage.getItem('userId');
-
-  useEffect(() => {
-    const getTasks = async () => {
-      if (userId) {
+  const getTasks = async () => {
+    if (userId) {
       try {
         const response = await fetch(`http://localhost:9090/tasks/getTasksByUser?userId=${userId}`, {
           method: "GET",
@@ -28,7 +26,6 @@ function Tasks() {
         });
         if (response.ok) {
           const result = await response.json();
-          console.log("Tasks fetched");
           setTasks(result);
         } else {
           console.log("Failed to fetch tasks");
@@ -37,9 +34,17 @@ function Tasks() {
         console.log("Failed to fetch data", error);
       }
     }
-    };
+  };
+
+  useEffect(() => {
     getTasks();
   }, []);
+
+  useEffect(() => {
+    if (addSuccess) {
+      getTasks();
+    }
+  }, [addSuccess]);
 
   const viewTask = (id) => navigate(`/pma/viewTask/${id}`);
 
@@ -67,8 +72,6 @@ function Tasks() {
 
   const tasksTodo = tasks.filter((task) => task.status === "to-do");
   const completedTasks = tasks.filter((task) => task.status === "completed");
-
-  
 
   const showNotification = (message) => {
     setNotification(message);
@@ -100,7 +103,7 @@ function Tasks() {
   return (
     <>
       <Sidebar />
-      <div className="main-content"id="color_fondo">
+      <div className="main-content" id="color_fondo">
         <TopBar />
         <div className="container tasks-container">
           <div className="tasks-top">
@@ -267,4 +270,3 @@ function Tasks() {
 }
 
 export default Tasks;
-
