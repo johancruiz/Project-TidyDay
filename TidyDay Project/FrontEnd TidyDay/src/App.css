@@ -95,7 +95,7 @@ body {
 }
 .projects-buttons input {
   width: 170px;
-  border: 1px solid #e8e8e8;
+  border: 1px solid #635f5f;
   border-radius: 3px;
   text-align: center;
 }
@@ -201,6 +201,11 @@ input::placeholder {
   font-size: 120%;
   font-family: "Playfair Display", system-ui;
 }
+
+input{
+  line-height: 0% ;
+}
+
 
 #color_fondodelete{
   background-color: #515151;

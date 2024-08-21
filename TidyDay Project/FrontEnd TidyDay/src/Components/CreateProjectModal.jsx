@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { Modal, Button, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import".././App.css";
+import"../Components/MyCalendar.css";
 
 function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
   const ref = useRef();
@@ -89,10 +90,9 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
               name="summary"
               placeholder="Add a short summary"
               style={{ fontSize: "15px",
-                fontWeight: "600",
-                border:"1",
-                color: "white",
-                
+                fontWeight: "300",
+                border:"1px solid",
+                color:"black" 
               }}
               className=" project-name-input m-1"
               value={data.summary}
@@ -238,7 +238,12 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
             >
               <div
                 className="btn btn-secondary m-1"
-                style={{ width: "fit-content" }}
+                style={{ width: "fit-content",
+                  padding: "10px 20px",
+                  borderRadius: "4px",
+                  fontWeight: "bold",
+                  backgroundColor: "#2c2c2c"
+                }}
                 onClick={handleClose}
               >
                 Cancel
@@ -247,8 +252,11 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
                 className="btn m-1"
                 style={{
                   width: "fit-content",
-                  backgroundColor: "#ff0854",
-                  color: "#fff",
+                    backgroundColor: "#0b2166",
+                    color: "#fff",
+                    padding: "10px 20px",
+                    borderRadius: "4px",
+                    fontWeight: "bold",
                 }}
                 type="submit"
               >

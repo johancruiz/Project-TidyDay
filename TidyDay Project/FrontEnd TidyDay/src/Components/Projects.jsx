@@ -96,8 +96,8 @@ function Projects() {
                 href="#"
                 className="btn"
                 style={{
-                  backgroundColor: "#ff0854",
-                  border: "1px solid red",
+                  backgroundColor: "#005cc8",
+                  border: "1px solid #92aad5",
                   color: "#fff",
                 }}
                 onClick={handleShowModal}
@@ -105,6 +105,7 @@ function Projects() {
                 <svg
                   stroke="currentColor"
                   fill="currentColor"
+                  backgroundColor="#005cc8"
                   strokeWidth="0"
                   viewBox="0 0 24 24"
                   height="1.3em"
