@@ -129,3 +129,26 @@ body, html {
   background-color: #9c9c9c;
   color: black;
 }
+
+.form-control{
+  background-color: #fff !important;
+}
+
+
+/* Estilo para los campos de fecha (input[type="date"]) */
+input[type="date"] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  color: white;
+  padding: 0.5em;
+  border: none;
+  cursor: pointer;
+}
+
+/* Cambiar el icono del calendario a blanco */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1); /* Esto cambia el color a blanco */
+  cursor: pointer;
+}

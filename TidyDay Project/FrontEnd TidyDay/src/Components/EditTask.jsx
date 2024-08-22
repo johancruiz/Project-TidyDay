@@ -1,27 +1,55 @@
 import { useEffect, useState } from "react";
 import { Modal, Col } from "react-bootstrap";
 import { useParams } from "react-router";
+
 function EditTask({ handleClose, show, taskData, setTaskData, setAddSuccess }) {
   const { id } = useParams();
+  const [projects, setProjects] = useState([]); // Estado para proyectos
+  const [selectedProject, setSelectedProject] = useState(taskData.project?.id || ""); // Estado para el proyecto seleccionado
+  const [selectedPriority, setSelectedPriority] = useState(taskData.priority || ""); // Estado para la prioridad seleccionada
+
+  useEffect(() => {
+    // Cargar proyectos disponibles
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch("http://localhost:9090/projects/getProjects"); // Cambia la URL según tu API
+        const data = await response.json();
+        console.log(data); // Verifica la estructura de los datos
+        if (Array.isArray(data)) {
+          setProjects(data);
+        } else {
+          console.error("Expected an array but got:", data);
+          setProjects([]); // Asegúrate de que projects sea un array
+        }
+      } catch (error) {
+        console.log("Failed to fetch projects", error);
+      }
+    };
+
+    fetchProjects();
+  }, []);
 
   const editTask = async (e) => {
     e.preventDefault();
     try {
+      const updatedTaskData = { ...taskData, project: { id: selectedProject }, priority: selectedPriority };
       const response = await fetch(
         `http://localhost:9090/tasks/editTask/${id}`,
         {
           method: "PUT",
           headers: { "Content-type": "application/json" },
-          body: JSON.stringify(taskData),
+          body: JSON.stringify(updatedTaskData),
         }
       );
       if (response.ok) {
         console.log("Task edited");
+        setAddSuccess("Task updated successfully."); // Mensaje de éxito
         handleClose();
+      } else {
+        console.log("Failed to update task");
       }
     } catch (error) {
       console.log("Failed to update task", error);
-      e.preventDefault();
     }
   };
 
@@ -31,14 +59,13 @@ function EditTask({ handleClose, show, taskData, setTaskData, setAddSuccess }) {
   };
 
   return (
-    <>
-      <Modal show={show} onHide={handleClose} size="md">
-        <form action="">
-          <Modal.Header closeButton onHide={handleClose}>
-            <h6 className="fw-bold">Edit task</h6>
-          </Modal.Header>
-          <Modal.Body className="m-2">
-            <Col></Col>
+    <Modal show={show} onHide={handleClose} size="md">
+      <form onSubmit={editTask}>
+        <Modal.Header closeButton>
+          <h6 className="fw-bold">Edit Task</h6>
+        </Modal.Header>
+        <Modal.Body className="m-2">
+          <Col>
             <input
               type="text"
               placeholder="Task name..."
@@ -48,44 +75,14 @@ function EditTask({ handleClose, show, taskData, setTaskData, setAddSuccess }) {
               onChange={handleChange}
             />
             <br />
-            <div className="dropdown m-1 row">
+            <div className="m-1 row">
               <Col md={3} sm={6}>
                 <h6 className="mt-1">Project</h6>
               </Col>
               <Col md={6} sm={6}>
-                <span>
-                  {" "}
-                  <button
-                    className="dropdown-toggle  custom-dropdown-toggle m-1"
-                    data-bs-toggle="dropdown"
-                    style={{
-                      border: "1px solid whitesmoke",
-                      padding: " 0.5%",
-                      backgroundColor: "transparent",
-                    }}
-                  >
-                    Choose project{" "}
-                    <span>
-                      <svg
-                        stroke="currentColor"
-                        fill="currentColor"
-                        strokeWidth="0"
-                        viewBox="0 0 20 20"
-                        height="1.3em"
-                        width="1.3em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                          clipRule="evenodd"
-                        ></path>
-                      </svg>
-                    </span>
-                  </button>
-                  <ul className="dropdown-menu">
-                    <li className="dropdown-item">Project 1</li>
-                  </ul>
+                {/* Mostrar el nombre del proyecto actual */}
+                <span className="form-control" style={{ border: "1px solid #ced4da", padding: "0.375rem 0.75rem" }}>
+                  {taskData.project?.projectName || "No project selected"}
                 </span>
               </Col>
             </div>
@@ -95,39 +92,41 @@ function EditTask({ handleClose, show, taskData, setTaskData, setAddSuccess }) {
                 <h6 className="mt-1">Priority</h6>
               </Col>
               <Col md={9}>
-                {" "}
-                <span>
-                  <div className="btn-group">
-                    {" "}
-                    <button className="btn btn-danger btn-sm">
-                      High priority
-                    </button>
-                    <button className="btn btn-info btn-sm">
-                      Low priority
-                    </button>
-                  </div>
-                </span>
+                <div className="btn-group">
+                  <button
+                    type="button"
+                    className={`btn ${selectedPriority === "High" ? "btn-danger" : ""}`}
+                    onClick={() => setSelectedPriority("High")}
+                  >
+                    High priority
+                  </button>
+                  <button
+                    type="button"
+                    className={`btn ${selectedPriority === "Low" ? "btn-info" : ""}`}
+                    onClick={() => setSelectedPriority("Low")}
+                  >
+                    Low priority
+                  </button>
+                </div>
               </Col>
             </div>
-          </Modal.Body>
-          <Modal.Footer>
-            <div className="">
-              <button className="btn btn-secondary m-1" onClick={handleClose}>
-                Cancel
-              </button>
-              <button
-                className="btn"
-                type="submit"
-                style={{ backgroundColor: "#ff0854", color: "#fff" }}
-                onClick={editTask}
-              >
-                Save task
-              </button>
-            </div>
-          </Modal.Footer>
-        </form>
-      </Modal>
-    </>
+          </Col>
+        </Modal.Body>
+        <Modal.Footer>
+          <button className="btn btn-secondary m-1" onClick={handleClose}>
+            Cancel
+          </button>
+          <button
+            className="btn"
+            type="submit"
+            style={{ backgroundColor: "#0b5ed7", color: "#fff" }}
+          >
+            Save Task
+          </button>
+        </Modal.Footer>
+      </form>
+    </Modal>
   );
 }
+
 export default EditTask;

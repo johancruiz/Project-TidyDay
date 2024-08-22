@@ -2,39 +2,36 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import Sidebar from "./Sidebar";
 import TopBar from "./TopBar";
-import { Modal, ModalBody, ModalFooter, ModalHeader, Button, ModalTitle } from "react-bootstrap";
+import { Modal, Button, Card, Alert, Badge } from "react-bootstrap";
+import EditTask from "./EditTask";
 
 function ViewTask() {
   const { id } = useParams();
-  const [task, setTask] = useState({});
-  const [projects, setProjects] = useState([]);
+  const [task, setTask] = useState(null);
   const [deleteModal, setDeleteModal] = useState(false);
   const [notification, setNotification] = useState("");
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [taskData, setTaskData] = useState({
+    taskName: "",
+    description: "",
+    status: "",
+    priority: "",
+    project: {}
+  });
   const navigate = useNavigate();
 
   useEffect(() => {
-    const getTaskAndProjects = async () => {
+    const getTask = async () => {
       try {
-        // Fetch the task details
-        const taskResponse = await fetch(`http://localhost:9090/tasks/taskById/${id}`, {
+        const response = await fetch(`http://localhost:9090/tasks/taskById/${id}`, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
         });
-        if (taskResponse.ok) {
-          const taskResult = await taskResponse.json();
-          setTask(taskResult);
 
-          // Fetch the projects associated with the task
-          const projectsResponse = await fetch(`http://localhost:9090/tasks/getProjectsByTask/${id}`, {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-          });
-          if (projectsResponse.ok) {
-            const projectsResult = await projectsResponse.json();
-            setProjects(projectsResult);
-          } else {
-            console.log("Failed to fetch projects");
-          }
+        if (response.ok) {
+          const taskResult = await response.json();
+          setTask(taskResult);
+          setTaskData(taskResult);
         } else {
           console.log("Failed to fetch task");
         }
@@ -42,12 +39,15 @@ function ViewTask() {
         console.log("Failed to fetch data", error);
       }
     };
-    getTaskAndProjects();
+    getTask();
   }, [id]);
 
-  const handleEdit = () => {
-    // Implement task editing logic
-    console.log("Edit task logic goes here");
+  const handleEditClick = () => {
+    setShowEditModal(true);
+  };
+
+  const handleEditModalClose = () => {
+    setShowEditModal(false);
   };
 
   const deleteTask = async () => {
@@ -59,7 +59,7 @@ function ViewTask() {
 
       if (response.ok) {
         setNotification("Task successfully deleted.");
-        setTimeout(() => navigate(`/pma/tasks`), 2000); // Redirect after 2 seconds
+        setTimeout(() => navigate(`/pma/tasks`), 2000);
       } else {
         setNotification("Failed to delete task.");
       }
@@ -71,47 +71,71 @@ function ViewTask() {
     }
   };
 
+  if (!task) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <>
       <Sidebar />
       <div className="main-content">
         <TopBar />
-        <div className="container mt-3">
-          <div className="view-task">
-            <h2 className="fw-bold mb-4" id="color_fondo" >Task Details</h2>
-            <div className="task-details">
-              <p id="color_fondo" ><strong id="color_fondo" >Task Name:</strong> {task.taskName}</p>
-              <p id="color_fondo"><strong id="color_fondo">Description:</strong> {task.description}</p>
-              <p id="color_fondo"><strong id="color_fondo">Status:</strong> {task.status}</p>
-              <p id="color_fondo"><strong id="color_fondo">Priority:</strong> {task.priority}</p>
-            </div>
-            <h3 className="mt-4" id="color_fondo">Associated Projects</h3>
-            {projects.length > 0 ? (
-              <ul className="list-group">
-                {projects.map((project) => (
-                  <li key={project.id} className="list-group-item">
-                    <p><strong>Project Name:</strong> {project.projectName}</p>
-                    <p><strong>Status:</strong> {project.status}</p>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p id="color_fondo" >No projects associated with this task.</p>
-            )}
-            <Button variant="info" className="mb-1" onClick={handleEdit}>Edit Task</Button>
-            <Button variant="danger" className="mb-1" onClick={() => setDeleteModal(true)}>Delete Task</Button>
-          </div>
-          {notification && <div className="notification" style={{ color: "005cc8" }}>{notification}</div>}
+        <div className="container mt-4">
+          <Card className="shadow-sm" style={{ backgroundColor: "#020817", color: "#fff" }}>
+            <Card.Header className=" text-light" style={{ backgroundColor: "#0b5ed7", color: "#fff" }}>
+              <h4>Task Details</h4>
+            </Card.Header>
+            <Card.Body>
+              <div className="task-details">
+                <h5 className="fw-bold mb-3">Task Name: <span >{task.taskName}</span></h5>
+                <hr className="my-4" />
+                <p className="mb-4"><strong>Description:</strong> {task.description}</p>
+                <hr className="my-4" />
+                <div className="mb-4">
+                  <strong>Status:</strong> <Badge pill bg={task.status === "Completed" ? "success" : "warning"}>{task.status}</Badge>
+                  <hr className="my-4" />
+                </div>
+                <div className="mb-4">
+                  <strong>Priority:</strong> <Badge pill bg={task.priority === "High" ? "danger" : "info"}>{task.priority}</Badge>
+                  <hr className="my-4" />
+                </div>
+              </div>
+              <h6 className="fw-bold mb-3">Associated Project</h6>
+              
+              {task.project ? (
+                <div className="list-group">
+                  <p className="mb-2"><strong>Project Name:</strong> {task.project.projectName}</p>
+                  
+                  <p className="mb-0"><strong>Status:</strong> <Badge pill bg={task.project.status === "Active" ? "success" : "secondary"}>{task.project.status}</Badge></p>
+                </div>
+              ) : (
+                <p className="mb-0">No project associated with this task.</p>
+              )}
+              <div className="mt-4">
+              <hr className="my-4" />
+                <Button variant="primary" className="me-2" onClick={handleEditClick}>Edit Task</Button>
+                <Button variant="danger" onClick={() => setDeleteModal(true)}>Delete Task</Button>
+              </div>
+            </Card.Body>
+          </Card>
+          {notification && <Alert variant="info" className="mt-3">{notification}</Alert>}
           <Modal show={deleteModal} onHide={() => setDeleteModal(false)}>
-            <ModalHeader closeButton>
-              <ModalTitle><h2>Confirm Delete</h2></ModalTitle>
-            </ModalHeader>
-            <ModalBody style={{ color: "005cc8" }} >Are you sure you want to delete this task?</ModalBody>
-            <ModalFooter>
+            <Modal.Header closeButton>
+              <Modal.Title>Confirm Delete</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Are you sure you want to delete this task?</Modal.Body>
+            <Modal.Footer>
               <Button variant="secondary" onClick={() => setDeleteModal(false)}>Cancel</Button>
               <Button variant="danger" onClick={deleteTask}>Delete</Button>
-            </ModalFooter>
+            </Modal.Footer>
           </Modal>
+          <EditTask
+            show={showEditModal}
+            handleClose={handleEditModalClose}
+            taskData={taskData}
+            setTaskData={setTaskData}
+            setAddSuccess={(msg) => setNotification(msg)}
+          />
         </div>
       </div>
     </>

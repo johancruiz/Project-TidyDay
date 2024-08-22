@@ -103,4 +103,15 @@ public class TaskController {
         List<Project> projects = projectsRepo.findAll(); // Usa projectsRepo para obtener todos los proyectos
         return ResponseEntity.ok(projects);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteProject(@PathVariable Long id) {
+        Optional<Project> project = projectsRepo.findById(id);
+        if (project.isPresent()) {
+            projectsRepo.delete(project.get());
+            return ResponseEntity.ok("Project deleted successfully");
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

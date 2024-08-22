@@ -3,6 +3,7 @@ import { useRef, useState } from "react";
 import { Modal, Button, Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import".././App.css";
+import"../Components/MyCalendar.css";
 
 function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
   const ref = useRef();
@@ -68,12 +69,12 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
     <Modal  show={show} className="modal" onHide={handleClose} size="lg">
       <form  action="" className="form" onSubmit={handleSubmit}>
         <div  className="container" id="color_form">
-          <Modal.Header  className="custom-modal-header p-3">
+          <Modal.Header closeButton className="custom-modal-header p-3">
             <Modal.Title  >
               <h6 id="title_form">New project</h6> 
             </Modal.Title>
           </Modal.Header>
-          <Modal.Body id="bordes1">
+          <Modal.Body >
           <input
             type="text"
             name="projectName"
@@ -82,6 +83,12 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
               value={data.projectName}
               onChange={handleOnchange}
               required
+              style={{ fontSize: "15px",
+                fontWeight: "300",
+                border:"1px solid",
+                color:"#fff", 
+                background:"#020817"
+              }}
             />
             <br />
             <input
@@ -89,10 +96,10 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
               name="summary"
               placeholder="Add a short summary"
               style={{ fontSize: "15px",
-                fontWeight: "600",
-                border:"1",
-                color: "white",
-                
+                fontWeight: "300",
+                border:"1px solid",
+                color:"#fff", 
+                background:"#020817"
               }}
               className=" project-name-input m-1"
               value={data.summary}
@@ -116,7 +123,8 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
                     width: "160px",
                     borderRadius: "2px",
                     color: "white",
-                    background:"#020817"
+                    background:"#020817",
+                    border:"1px solid"
                   }}
                 />
               </Col>
@@ -136,7 +144,8 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
                     width: "160px",
                     borderRadius: "2px",
                     color: "white",
-                    background:"#020817"
+                    background:"#020817",
+                    border:"1px solid"
                   }}
                 />
                 
@@ -149,9 +158,11 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
                     style={{
                       height: "28px",
                       width: "160px",
-                      border: "1px solid #e8e8e8",
                       borderRadius: "2px",
-                      color: "white"
+                      color: "white",
+                      background:"#020817",
+                      border:"1px solid",
+                      fontSize:"14px"
                     }}
                   >
                     {selectedValue}
@@ -159,10 +170,12 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
                   <ul className="dropdown-menu">
                     <li
                       className="dropdown-item"
+                      
                       onClick={() => {
                         handleSelectedValue("Not-started");
                         setData((prevData) => ({ ...prevData, status: "Not-started" }));
                       }}
+                      
                     >
                       Not started
                     </li>
@@ -199,7 +212,8 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
                     width: "160px",
                     borderRadius: "2px",
                     color: "white",
-                    background:"#020817"
+                    background:"#020817",
+                    border:"1px solid"
                   }}
                 />
               </Col>
@@ -238,7 +252,12 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
             >
               <div
                 className="btn btn-secondary m-1"
-                style={{ width: "fit-content" }}
+                style={{ width: "fit-content",
+                  padding: "10px 20px",
+                  borderRadius: "4px",
+                  fontWeight: "bold",
+                  backgroundColor: "#2c2c2c"
+                }}
                 onClick={handleClose}
               >
                 Cancel
@@ -247,8 +266,11 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
                 className="btn m-1"
                 style={{
                   width: "fit-content",
-                  backgroundColor: "#ff0854",
-                  color: "#fff",
+                    backgroundColor: "#0b2166",
+                    color: "#fff",
+                    padding: "10px 20px",
+                    borderRadius: "4px",
+                    fontWeight: "bold",
                 }}
                 type="submit"
               >
