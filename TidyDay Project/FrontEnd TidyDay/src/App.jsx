@@ -14,8 +14,11 @@ import ViewTask from "./Components/ViewTask";
 import Login from "./Components/Login";
 import Signup from "./Components/Signup";
 
+
 function App() {
+ 
   return (
+    
     <Provider store={store}>
       <BrowserRouter>
         <div className="app">

@@ -4,6 +4,8 @@ import Sidebar from "./Sidebar";
 import TopBar from "./TopBar";
 import { Row, Col } from "react-bootstrap";
 import CreateProjectModal from "./CreateProjectModal";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Projects() {
   const navigate = useNavigate();
@@ -40,10 +42,11 @@ function Projects() {
           setProjects(projectsData);
         } else {
           const errorText = await response.text();
-          console.error("Failed to fetch projects:", errorText);
+          toast.error(`Failed to fetch projects: ${errorText}`);
         }
       } catch (error) {
         console.error("Failed to fetch projects:", error);
+        toast.error("Failed to fetch projects.");
       }
     }
   };
@@ -63,18 +66,15 @@ function Projects() {
 
   useEffect(() => {
     if (addSuccess) {
-      const timer = setTimeout(() => {
-        setAddSuccess("");
-      }, 3000); // Ocultar notificación después de 5 segundos
-
-      return () => clearTimeout(timer); // Limpiar el timer si el componente se desmonta
+      toast.success(addSuccess);
+      setAddSuccess(""); // Limpiar el mensaje después de mostrar la notificación
     }
   }, [addSuccess]);
 
   return (
     <>
       <Sidebar/>
-      <div className="main-content"id="color_fondo">
+      <div className="main-content" id="color_fondo">
         <TopBar />
         <div
           className="card m-3 p-4"
@@ -85,7 +85,7 @@ function Projects() {
             minHeight: "35rem",
           }}
         >
-          <div className="row" style={{ marginLeft: "0px", marginRight: "0px",color:"white" }}>
+          <div className="row" style={{ marginLeft: "0px", marginRight: "0px", color: "white" }}>
             <Col md={6} xs={5} sm={6} className="mt-2">
               <h5 className="fw-bold projects-title mt-1">
                 All Projects
@@ -128,7 +128,6 @@ function Projects() {
             setAddSuccess={setAddSuccess}
             userId={userId}
           />
-          {addSuccess && <div className="notification">{addSuccess}</div>}
           {projects.length > 0 ? (
             <div className="projects-cards mt-2">
               {projectChunks.map((chunk, chunkIndex) => (
@@ -208,6 +207,7 @@ function Projects() {
             </h5>
           )}
         </div>
+        <ToastContainer />
       </div>
     </>
   );

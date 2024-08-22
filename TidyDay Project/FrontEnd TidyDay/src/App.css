@@ -376,6 +376,7 @@ input{
   margin-left: 2%;
   width: 100%;
   padding: 1%;
+  border-radius: 8px;
 }
 .input-task:focus {
   outline: none;

@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import Sidebar from "./Sidebar";
 import TopBar from "./TopBar";
-import { Modal, Button, Card, Alert, Badge } from "react-bootstrap";
+import { Modal, Button, Card, Badge } from "react-bootstrap";
 import EditProjectModal from "./EditProjectModal";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ViewProject = () => {
   const navigate = useNavigate();
@@ -20,7 +22,6 @@ const ViewProject = () => {
   const { id } = useParams();
   const [editModal, setEditModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
-  const [notification, setNotification] = useState("");
 
   useEffect(() => {
     const getProject = async () => {
@@ -30,10 +31,11 @@ const ViewProject = () => {
           const data = await response.json();
           setProjectData(data);
         } else {
-          console.log("Failed to fetch project");
+          toast.error("Failed to fetch project.");
         }
       } catch (error) {
         console.log("Failed to fetch project data", error);
+        toast.error("Failed to fetch project data.");
       }
     };
     getProject();
@@ -54,14 +56,14 @@ const ViewProject = () => {
       });
 
       if (response.ok) {
-        setNotification("Project successfully deleted.");
+        toast.success("Project successfully deleted.");
         setTimeout(() => navigate(`/pma/projects/${id}`), 2000);
       } else {
-        setNotification("Failed to delete project.");
+        toast.error("Failed to delete project.");
       }
     } catch (error) {
       console.log("Failed to delete project", error);
-      setNotification("Failed to delete project.");
+      toast.error("Failed to delete project.");
     } finally {
       setDeleteModal(false);
     }
@@ -116,15 +118,14 @@ const ViewProject = () => {
               </div>
             </Card.Body>
           </Card>
-          {notification && <Alert variant="info" className="mt-3">{notification}</Alert>}
-          <Modal show={deleteModal} onHide={hideDeleteModal}>
-            <Modal.Header closeButton>
-              <Modal.Title>Confirm Delete</Modal.Title>
+          <Modal style={{ backgroundColor: "#020817" }} show={deleteModal} onHide={hideDeleteModal}>
+            <Modal.Header style={{ backgroundColor: "#020817", color: "#fff" }} closeButton>
+              <Modal.Title style={{ backgroundColor: "#020817", color: "#fff" }}>Confirm Delete</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Are you sure you want to delete this project?</Modal.Body>
-            <Modal.Footer>
+            <Modal.Body style={{ backgroundColor: "#020817", color: "#fff" }}>Are you sure you want to delete this project?</Modal.Body>
+            <Modal.Footer style={{ backgroundColor: "#020817", color: "#fff" }}>
               <Button variant="secondary" onClick={hideDeleteModal}>Cancel</Button>
-              <Button variant="danger" onClick={deleteProject}>Delete</Button>
+              <Button style={{ backgroundColor: "#0b5ed7", color: "#fff" }} onClick={deleteProject}>Delete</Button>
             </Modal.Footer>
           </Modal>
           <EditProjectModal
@@ -134,6 +135,7 @@ const ViewProject = () => {
             setProjectData={setProjectData}
           />
         </div>
+        <ToastContainer />
       </div>
     </>
   );

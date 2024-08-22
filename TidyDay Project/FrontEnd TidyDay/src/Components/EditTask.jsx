@@ -14,7 +14,6 @@ function EditTask({ handleClose, show, taskData, setTaskData, setAddSuccess }) {
       try {
         const response = await fetch("http://localhost:9090/projects/getProjects"); // Cambia la URL según tu API
         const data = await response.json();
-        console.log(data); // Verifica la estructura de los datos
         if (Array.isArray(data)) {
           setProjects(data);
         } else {
@@ -59,18 +58,19 @@ function EditTask({ handleClose, show, taskData, setTaskData, setAddSuccess }) {
   };
 
   return (
-    <Modal show={show} onHide={handleClose} size="md">
-      <form onSubmit={editTask}>
-        <Modal.Header closeButton>
+    <Modal style={{ backgroundColor: "#020817"}} show={show} onHide={handleClose} size="md">
+      <form style={{ backgroundColor: "#020817", color: "#fff",  border: "1px solid #ced4da" }} onSubmit={editTask}>
+        <Modal.Header style={{ backgroundColor: "#020817", color: "#fff" }} closeButton>
           <h6 className="fw-bold">Edit Task</h6>
         </Modal.Header>
-        <Modal.Body className="m-2">
+        <Modal.Body style={{ backgroundColor: "#020817", color: "#fff" }} className="m-2">
           <Col>
             <input
               type="text"
               placeholder="Task name..."
               className="input-task"
               name="taskName"
+              style={{ border: "1px solid #ced4da", padding: "0.375rem 0.75rem"}}
               value={taskData.taskName}
               onChange={handleChange}
             />
@@ -97,6 +97,7 @@ function EditTask({ handleClose, show, taskData, setTaskData, setAddSuccess }) {
                     type="button"
                     className={`btn ${selectedPriority === "High" ? "btn-danger" : ""}`}
                     onClick={() => setSelectedPriority("High")}
+                    style={{ color: "#fff" }}
                   >
                     High priority
                   </button>
@@ -104,6 +105,7 @@ function EditTask({ handleClose, show, taskData, setTaskData, setAddSuccess }) {
                     type="button"
                     className={`btn ${selectedPriority === "Low" ? "btn-info" : ""}`}
                     onClick={() => setSelectedPriority("Low")}
+                    style={{  color: "#fff" }}
                   >
                     Low priority
                   </button>
@@ -112,7 +114,7 @@ function EditTask({ handleClose, show, taskData, setTaskData, setAddSuccess }) {
             </div>
           </Col>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer style={{ backgroundColor: "#020817", color: "#fff" }}>
           <button className="btn btn-secondary m-1" onClick={handleClose}>
             Cancel
           </button>

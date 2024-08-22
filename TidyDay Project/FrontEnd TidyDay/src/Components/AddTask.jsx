@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
 import { Modal, Col, Row, Form, Button } from "react-bootstrap";
+import { toast } from "react-toastify";
 import "../Components/MyCalendar.css";
 
 const AddTask = ({
   show,
   handleClose,
-  showNotification,
-  setAddSuccess,
-  onTaskAdded = () => {}, // Proporciona una función por defecto
+  onTaskAdded = () => {}, // Función por defecto para actualizar la lista de tareas
 }) => {
   const [taskData, setTaskData] = useState({
     taskName: "",
@@ -19,7 +18,7 @@ const AddTask = ({
   const [projects, setProjects] = useState([]);
   const [projectId, setProjectId] = useState("");
 
-  const userId = location.state?.userId || localStorage.getItem("userId");
+  const userId = localStorage.getItem("userId");
 
   useEffect(() => {
     const getProjects = async () => {
@@ -38,10 +37,10 @@ const AddTask = ({
           const projectsData = await response.json();
           setProjects(projectsData);
         } else {
-          console.log("Failed to fetch projects");
+          toast.error("Failed to fetch projects");
         }
       } catch (error) {
-        console.log("Failed to fetch projects", error);
+        toast.error("Failed to fetch projects");
       }
     };
     getProjects();
@@ -51,7 +50,7 @@ const AddTask = ({
     e.preventDefault();
 
     if (!userId) {
-      console.log("User ID is not defined");
+      toast.error("User ID is not defined");
       return;
     }
 
@@ -70,21 +69,17 @@ const AddTask = ({
         );
 
         if (response.ok) {
-          console.log("Task added");
-          handleClose();
-          setAddSuccess("Task added successfully!");
-          showNotification("Task added successfully!");
-
-          // Llamar a la función onTaskAdded para actualizar la lista de tareas
-          onTaskAdded(newTask);
+          toast.success("Task added successfully!");
+          handleClose(); // Cierra el modal después de agregar la tarea
+          onTaskAdded(newTask); // Actualiza la lista de tareas
         } else {
-          console.log("Failed to add task");
+          toast.error("Failed to add task");
         }
       } catch (error) {
-        console.log("Failed to add task", error);
+        toast.error("An error occurred while adding the task");
       }
     } else {
-      console.log("Enter task name and select a project");
+      toast.error("Enter task name and select a project");
     }
   };
 
