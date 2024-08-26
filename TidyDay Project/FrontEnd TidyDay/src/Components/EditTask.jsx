@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { Modal, Col } from "react-bootstrap";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router-dom"; // Importa useNavigate
 
 function EditTask({ handleClose, show, taskData, setTaskData, setAddSuccess }) {
   const { id } = useParams();
+  const navigate = useNavigate(); // Crea una instancia de navigate
   const [projects, setProjects] = useState([]); // Estado para proyectos
   const [selectedProject, setSelectedProject] = useState(taskData.project?.id || ""); // Estado para el proyecto seleccionado
   const [selectedPriority, setSelectedPriority] = useState(taskData.priority || ""); // Estado para la prioridad seleccionada
@@ -44,6 +45,7 @@ function EditTask({ handleClose, show, taskData, setTaskData, setAddSuccess }) {
         console.log("Task edited");
         setAddSuccess("Task updated successfully."); // Mensaje de éxito
         handleClose();
+        navigate('/pma/tasks'); // Redirigir a /pma/tasks
       } else {
         console.log("Failed to update task");
       }
@@ -59,7 +61,7 @@ function EditTask({ handleClose, show, taskData, setTaskData, setAddSuccess }) {
 
   return (
     <Modal style={{ backgroundColor: "#020817"}} show={show} onHide={handleClose} size="md">
-      <form style={{ backgroundColor: "#020817", color: "#fff",  border: "1px solid #ced4da" }} onSubmit={editTask}>
+      <form style={{ backgroundColor: "#020817", color: "#fff", border: "1px solid #ced4da" }} onSubmit={editTask}>
         <Modal.Header style={{ backgroundColor: "#020817", color: "#fff" }} closeButton>
           <h6 className="fw-bold">Edit Task</h6>
         </Modal.Header>
@@ -105,7 +107,7 @@ function EditTask({ handleClose, show, taskData, setTaskData, setAddSuccess }) {
                     type="button"
                     className={`btn ${selectedPriority === "Low" ? "btn-info" : ""}`}
                     onClick={() => setSelectedPriority("Low")}
-                    style={{  color: "#fff" }}
+                    style={{ color: "#fff" }}
                   >
                     Low priority
                   </button>

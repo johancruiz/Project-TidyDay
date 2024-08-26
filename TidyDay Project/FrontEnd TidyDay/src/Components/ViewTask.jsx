@@ -60,7 +60,7 @@ function ViewTask() {
       });
 
       if (response.ok) {
-        toast.success("Task successfully deleted.");
+        
         setTimeout(() => navigate(`/pma/tasks`), 2000);
       } else {
         toast.error("Failed to delete task.");
