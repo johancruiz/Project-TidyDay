@@ -16,7 +16,7 @@ function CreateProjectModal({ show, handleClose, setAddSuccess, userId }) {
         progress: 0,
     });
 
-    console.log(object);
+    
 
     // Restablecer el formulario al abrir el modal
     useEffect(() => {
