@@ -1,9 +1,12 @@
 // src/Components/SignUp.jsx
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUserName } from "../Redux/Action";
 import tidyday3 from '../assets/tidyday3.png';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 
 function SignUp() {
   const navigate = useNavigate();
@@ -86,72 +89,93 @@ function SignUp() {
   };
 
   return (
-    <div className="signup-page m-0">
-      <section className="w-95 d-flex justify-content-center pb-4 p-4">
-        <form className="card log-in-card" onSubmit={handleSubmit}>
-          <div data-mdb-input-init className="form-outline mb-4 text-center">
-            <img src={tidyday3} alt="" className="logo" />
-            <br />
-            <small style={{ color: '#fff' }}>Create a new account to get started with myWorkSpace</small>
-          </div>
+    <>
+    <div className='welcome-mode'>
+				<Navbar bg="light" expand="lg">
+					<Container>
+						<Navbar.Toggle aria-controls="basic-navbar-nav" className="custom-toggler" />
+						<Navbar.Collapse id="basic-navbar-nav">
+							<Nav>
+								<Nav.Link href="/pma/login">Login</Nav.Link>
+								<Nav.Link href="/pma/signup">Register</Nav.Link>
+							</Nav>
+							<Nav className="me-auto">
+								<Nav.Link href="/pma">Home</Nav.Link>
+							</Nav>
+						</Navbar.Collapse>
+					</Container>
+				</Navbar>
+			</div>
+      <div className="mode-user">
+        <div className="signup-page m-0">
+          <section className="w-95 d-flex justify-content-center pb-4 p-4">
+            <form className="card log-in-card" onSubmit={handleSubmit}>
+              <div data-mdb-input-init className="form-outline mb-4 text-center">
+                <img src={tidyday3} alt="" className="logo" />
+                <br />
+                <small style={{ color: '#fff' }}>Create a new account to get started with myWorkSpace</small>
+              </div>
 
-          <div data-mdb-input-init className="form-outline mb-4">
-            <h6 style={{ color: '#fff' }}>Username</h6>
-            <input
-              type="text"
-              className="form-control"
-              value={formData.username}
-              name="username"
-              onChange={handleChange}
-              required
-            />
-            {errors.username && <p style={{ color: 'red' }}>{errors.username}</p>}
-          </div>
+              <div data-mdb-input-init className="form-outline mb-4">
+                <h6 style={{ color: '#fff' }}>Username</h6>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={formData.username}
+                  name="username"
+                  onChange={handleChange}
+                  required
+                />
+                {errors.username && <p style={{ color: 'red' }}>{errors.username}</p>}
+              </div>
 
-          <div data-mdb-input-init className="form-outline mb-4">
-            <h6 style={{ color: '#fff' }}>Email</h6>
-            <input
-              type="email"
-              className="form-control"
-              value={formData.email}
-              name="email"
-              onChange={handleChange}
-              required
-            />
-            {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
-          </div>
+              <div data-mdb-input-init className="form-outline mb-4">
+                <h6 style={{ color: '#fff' }}>Email</h6>
+                <input
+                  type="email"
+                  className="form-control"
+                  value={formData.email}
+                  name="email"
+                  onChange={handleChange}
+                  required
+                />
+                {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
+              </div>
 
-          <div data-mdb-input-init className="form-outline mb-4">
-            <h6 style={{ color: '#fff' }}>Password</h6>
-            <input
-              type="password"
-              className="form-control"
-              value={formData.password}
-              name="password"
-              onChange={handleChange}
-              required
-            />
-            {errors.password && <p style={{ color: 'red' }}>{errors.password}</p>}
-          </div>
+              <div data-mdb-input-init className="form-outline mb-4">
+                <h6 style={{ color: '#fff' }}>Password</h6>
+                <input
+                  type="password"
+                  className="form-control"
+                  value={formData.password}
+                  name="password"
+                  onChange={handleChange}
+                  required
+                />
+                {errors.password && <p style={{ color: 'red' }}>{errors.password}</p>}
+              </div>
 
-          {errors.form && <p style={{ color: 'red' }}>{errors.form}</p>}
+              {errors.form && <p style={{ color: 'red' }}>{errors.form}</p>}
 
-          <button
-            data-mdb-ripple-init
-            type="submit"
-            className="btn btn-primary btn-block mb-4 mt-3"
-          >
-            Sign Up
-          </button>
+              <button
+                data-mdb-ripple-init
+                type="submit"
+                className="btn btn-primary btn-block mb-4 mt-3"
+              >
+                Sign Up
+              </button>
 
-          <div className="text-center">
-            <p style={{ color: '#fff' }}>
-              Already have an account? <Link to="/pma/login">Sign in here</Link>
-            </p>
-          </div>
-        </form>
-      </section>
-    </div>
+              <div className="text-center">
+                <p style={{ color: '#fff' }}>
+                  Already have an account? <Link to="/pma/login">Sign in here</Link>
+                </p>
+              </div>
+            </form>
+          </section>
+        </div>
+      </div>
+    </>
+
   );
 }
 

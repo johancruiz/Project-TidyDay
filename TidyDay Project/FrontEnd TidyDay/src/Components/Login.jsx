@@ -1,11 +1,15 @@
 
 // src/Components/Login.jsx
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setUserName } from '../Redux/Action';
 import tidyday3 from '../assets/tidyday3.png';
 import { Link } from 'react-router-dom';
+import Container from 'react-bootstrap/Container';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+
 
 function Login() {
 	const dispatch = useDispatch();
@@ -59,66 +63,88 @@ function Login() {
 	};
 
 	return (
-		<div className="login-page">
-			<section className="w-95 d-flex justify-content-center pb-4 p-4">
-				<form className="card log-in-card" onSubmit={login}>
-					<div data-mdb-input-init className="form-outline mb-4 text-center">
-						<img src={tidyday3} alt="" className="logo" />
-					</div>
-		
-					<div data-mdb-input-init className="form-outline mb-4">
-						<h6 style={{ color: '#fff' }}>Email</h6>
-						<input
-							type="email"
-							className="form-control"
-							value={email}
-							name="email"
-							onChange={handleChange}
-							required
-						/>
-					</div>
-		
-					<div data-mdb-input-init className="form-outline mb-4">
-						<h6 style={{ color: '#fff' }}>Password</h6>
-						<input 
-							type="password"
-							className="form-control"
-							value={password}
-							name="password"
-							onChange={handleChange}
-							required
-						/>
-					</div>
-					
-					{/* Mostrar mensaje de error */}
-					{error && <p style={{ color: 'red' }}>{error} user or password is incorrect</p>}
-		
-					<small style={{ color: '#fff' }}> 
-						I agree to the <a href="#">workspace customer agreement</a>,<br />
-						which incorporates by reference the AI product-specific terms and
-						acknowledge the <a href="#">privacy policy</a>
-					</small>
-		
-					<button
-						data-mdb-ripple-init
-						type="submit"
-						className="btn btn-primary btn-block mb-4 mt-3"
-					>
-						Sign in
-					</button>
-		
-					<div className="text-center">
-						<p style={{ color: '#fff' }}>Or sign in with:</p>
-						{/* Social buttons here */}
-					</div>
-					<div className="text-center">
-						<p style={{ color: '#fff' }}> 
-							Don’t have an account? <Link to="/pma/signup">Sign up here</Link> {/* Ajustado */}
-						</p>
-					</div>
-				</form>
-			</section>
-		</div>
+		<>
+			<div className='welcome-mode'>
+				<Navbar bg="light" expand="lg">
+					<Container>
+						<Navbar.Toggle aria-controls="basic-navbar-nav" className="custom-toggler" />
+						<Navbar.Collapse id="basic-navbar-nav">
+							<Nav>
+								<Nav.Link href="/pma/login">Login</Nav.Link>
+								<Nav.Link href="/pma/signup">Register</Nav.Link>
+							</Nav>
+							<Nav className="me-auto">
+								<Nav.Link href="/pma">Home</Nav.Link>
+							</Nav>
+						</Navbar.Collapse>
+					</Container>
+				</Navbar>
+			</div>
+
+			<div className='mode-user'>
+				<div className="login-page">
+					<section className="w-95 d-flex justify-content-center pb-4 p-4">
+						<form className="card log-in-card" onSubmit={login}>
+							<div data-mdb-input-init className="form-outline mb-4 text-center">
+								<img src={tidyday3} alt="" className="logo" />
+							</div>
+
+							<div data-mdb-input-init className="form-outline mb-4">
+								<h6 style={{ color: '#fff' }}>Email</h6>
+								<input
+									type="email"
+									className="form-control"
+									value={email}
+									name="email"
+									onChange={handleChange}
+									required
+								/>
+							</div>
+
+							<div data-mdb-input-init className="form-outline mb-4">
+								<h6 style={{ color: '#fff' }}>Password</h6>
+								<input
+									type="password"
+									className="form-control"
+									value={password}
+									name="password"
+									onChange={handleChange}
+									required
+								/>
+							</div>
+
+							{/* Mostrar mensaje de error */}
+							{error && <p style={{ color: 'red' }}>{error} user or password is incorrect</p>}
+
+							<small style={{ color: '#fff' }}>
+								I agree to the <a href="#">workspace customer agreement</a>,<br />
+								which incorporates by reference the AI product-specific terms and
+								acknowledge the <a href="#">privacy policy</a>
+							</small>
+
+							<button
+								data-mdb-ripple-init
+								type="submit"
+								className="btn btn-primary btn-block mb-4 mt-3"
+							>
+								Sign in
+							</button>
+
+							<div className="text-center">
+								<p style={{ color: '#fff' }}>Or sign in with:</p>
+								{/* Social buttons here */}
+							</div>
+							<div className="text-center">
+								<p style={{ color: '#fff' }}>
+									Don’t have an account? <Link to="/pma/signup">Sign up here</Link> {/* Ajustado */}
+								</p>
+							</div>
+						</form>
+					</section>
+				</div>
+			</div>
+		</>
+
 	);
 }
 
