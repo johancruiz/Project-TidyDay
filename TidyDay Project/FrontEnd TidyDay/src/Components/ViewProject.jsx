@@ -138,6 +138,7 @@ const ViewProject = () => {
           </div>
           <ToastContainer />
         </div>
+        <ToastContainer />
       </div>
 
     </>

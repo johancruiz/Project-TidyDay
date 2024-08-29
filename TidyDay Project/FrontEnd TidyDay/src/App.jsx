@@ -13,6 +13,8 @@ import ViewProject from "./Components/ViewProject";
 import ViewTask from "./Components/ViewTask";
 import Login from "./Components/Login";
 import Signup from "./Components/Signup";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Importar estilos de Toastify
 
 function App() {
   return (
@@ -25,12 +27,21 @@ function App() {
             <Route path="/pma/signup" element={<Signup />} />
             <Route path="/pma/home" element={<Home />} />
             <Route path="/pma/projects/:userId" element={<Projects />} />
-            {/* <Route path="/pma/projects" element={<Projects />} /> Puedes mantener esta si es necesario */}
             <Route path="/pma/tasks" element={<Tasks />} />
             <Route path="/pma/calendar" element={<Calendar />} />
             <Route path="/pma/viewProject/:id" element={<ViewProject />} />
             <Route path="/pma/viewTask/:id" element={<ViewTask />} />
           </Routes>
+          <ToastContainer 
+              position="top-right" 
+              autoClose={3000} 
+              hideProgressBar={false} 
+              closeOnClick 
+              pauseOnHover 
+              draggable 
+              pauseOnFocusLoss 
+              theme="dark" 
+          />
         </div>
       </BrowserRouter>
     </Provider>

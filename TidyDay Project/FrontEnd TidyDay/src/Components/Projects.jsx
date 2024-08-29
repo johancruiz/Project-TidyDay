@@ -72,107 +72,107 @@ function Projects() {
 
   return (
     <>
-      <div className="mode-user">
-        <Sidebar />
-        <div className="main-content" id="color_fondo">
-          <TopBar />
-          <div className="card m-3 p-4" style={{ backgroundColor: "#020817", borderRadius: "10px", border: "none", minHeight: "35rem" }}>
-            <div className="row" style={{ color: "white" }}>
-              <Col md={6} className="mt-2">
-                <h5 className="fw-bold projects-title mt-1">All Projects</h5>
-              </Col>
-              <Col md={6} className="create-link mt-1 text-end">
-                <button
-                  className="btn btn-primary"
-                  onClick={handleShowModal}
-                  style={{ backgroundColor: "#005cc8", border: "none" }}
-                >
-                  <svg
-                    stroke="currentColor"
-                    fill="currentColor"
-                    viewBox="0 0 24 24"
-                    height="1.3em"
-                    width="1.3em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      fill="none"
-                      stroke="#fff"
-                      strokeWidth="2"
-                      d="M12,18 L12,6 M6,12 L18,12"
-                    ></path>
-                  </svg>
-                </button>
-              </Col>
-            </div>
-            <CreateProjectModal
-              show={showModal}
-              handleClose={handleHideModal}
-              setAddSuccess={setAddSuccess}
-              userId={userId}
-            />
-            {projects.length > 0 ? (
-              <div className="projects-cards mt-2">
-                {projectChunks.map((chunk, chunkIndex) => (
-                  <Row key={chunkIndex}>
-                    {chunk.map((project) => (
-                      <Col md={4} key={project.id}>
-                        <div
-                          className={`project-card card mb-3`}
-                          onClick={() => handleViewProject(project.id)}
-                        >
-                          <div className="card-body">
-                            <h4 className="project-name">{project.projectName}</h4>
-                            <div className="status-container">
-                              <button className={`status-btn ${project.status.replace(" ", "-").toLowerCase()}`}>
-                                {project.status}
-                              </button>
-                            </div>
-                            <p className="project-summary">{project.summary}</p>
-                            <div className="dates">
-                              <h6>
-                                Added date: <span>{project.addedDate}</span>
-                              </h6>
-                              <h6>
-                                Due date: <span>{project.dueDate}</span>
-                              </h6>
-                            </div>
-                            <div className="progress-container">
-                              <h6 style={{ color: "white" }} >Progress: </h6>
-                              <div className="progress" style={{ height: "20px" }}>
-                                <div
-                                  className="progress-bar"
-                                  role="progressbar"
-                                  style={{
-                                    width: `${project.progress}%`,
-                                    backgroundColor: project.progress === 100 ? 'green' : '#005cc8',
-                                    color: 'white',
-                                    textAlign: 'center',
-                                    lineHeight: '20px',
-                                  }}
-                                >
-                                  {project.progress}%
-                                </div>
-                              </div>
+  <div className="mode-user">
+    <Sidebar />
+    <div className="main-content" id="color_fondo">
+      <TopBar />
+      <div className="card m-3 p-4" style={{ backgroundColor: "#020817", borderRadius: "10px", border: "none", minHeight: "35rem" }}>
+        <div className="row" style={{ color: "white" }}>
+          <Col md={6} className="mt-2">
+            <h5 className="fw-bold projects-title mt-1">All Projects</h5>
+          </Col>
+          <Col md={6} className="create-link mt-1 text-end">
+            <button
+              className="btn btn-primary"
+              onClick={handleShowModal}
+              style={{ backgroundColor: "#005cc8", border: "none" }}
+            >
+              <svg
+                stroke="currentColor"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                height="1.3em"
+                width="1.3em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill="none"
+                  stroke="#fff"
+                  strokeWidth="2"
+                  d="M12,18 L12,6 M6,12 L18,12"
+                ></path>
+              </svg>
+            </button>
+          </Col>
+        </div>
+        <CreateProjectModal
+          show={showModal}
+          handleClose={handleHideModal}
+          setAddSuccess={setAddSuccess}
+          userId={userId}
+        />
+        {projects.length > 0 ? (
+          <div className="projects-cards mt-2">
+            {projectChunks.map((chunk, chunkIndex) => (
+              <Row key={chunkIndex}>
+                {chunk.map((project) => (
+                  <Col md={4} key={project.id}>
+                    <div
+                      className={`project-card card mb-3`}
+                      onClick={() => handleViewProject(project.id)}
+                    >
+                      <div className="card-body">
+                        <h4 className="project-name">{project.projectName}</h4>
+                        <div className="status-container">
+                          <button className={`status-btn ${project.status.replace(" ", "-").toLowerCase()}`}>
+                            {project.status}
+                          </button>
+                        </div>
+                        <p className="project-summary">{project.summary}</p>
+                        <div className="dates">
+                          <h6>
+                            Added date: <span>{project.addedDate}</span>
+                          </h6>
+                          <h6>
+                            Due date: <span>{project.dueDate}</span>
+                          </h6>
+                        </div>
+                        <div className="progress-container">
+                          <h6 style={{ color: "white" }}>Progress: </h6>
+                          <div className="progress" style={{ height: "20px" }}>
+                            <div
+                              className="progress-bar"
+                              role="progressbar"
+                              style={{
+                                width: `${project.progress}%`,
+                                backgroundColor: project.progress === 100 ? 'green' : '#005cc8',
+                                color: 'white',
+                                textAlign: 'center',
+                                lineHeight: '20px',
+                              }}
+                            >
+                              {project.progress}%
                             </div>
                           </div>
                         </div>
-                      </Col>
-                    ))}
-                  </Row>
+                      </div>
+                    </div>
+                  </Col>
                 ))}
-              </div>
-            ) : (
-              <h5 style={{ textAlign: "center", marginTop: "150px", color: "GrayText", fontSize: "16px" }}>
-                No projects...
-              </h5>
-            )}
+              </Row>
+            ))}
           </div>
-          <ToastContainer />
-        </div>
+        ) : (
+          <h5 style={{ textAlign: "center", marginTop: "150px", color: "GrayText", fontSize: "16px" }}>
+            No projects...
+          </h5>
+        )}
+        <ToastContainer />
       </div>
+    </div>
+  </div>
+</>
 
-    </>
   );
 }
 

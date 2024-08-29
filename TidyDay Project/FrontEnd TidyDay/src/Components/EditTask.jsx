@@ -133,8 +133,79 @@ function EditTask({ handleClose, show, taskData, setTaskData, setAddSuccess }) {
           </form>
         </Modal>
       </div>
-    </>
+    
 
+    <Modal style={{ backgroundColor: "#020817"}} show={show} onHide={handleClose} size="md">
+      <form style={{ backgroundColor: "#020817", color: "#fff", border: "1px solid #ced4da" }} onSubmit={editTask}>
+        <Modal.Header style={{ backgroundColor: "#020817", color: "#fff" }} closeButton>
+          <h6 className="fw-bold">Edit Task</h6>
+        </Modal.Header>
+        <Modal.Body style={{ backgroundColor: "#020817", color: "#fff" }} className="m-2">
+          <Col>
+            <input
+              type="text"
+              placeholder="Task name..."
+              className="input-task"
+              name="taskName"
+              style={{ border: "1px solid #ced4da", padding: "0.375rem 0.75rem"}}
+              value={taskData.taskName}
+              onChange={handleChange}
+            />
+            <br />
+            <div className="m-1 row">
+              <Col md={3} sm={6}>
+                <h6 className="mt-1">Project</h6>
+              </Col>
+              <Col md={6} sm={6}>
+                {/* Mostrar el nombre del proyecto actual */}
+                <span className="form-control" style={{ border: "1px solid #ced4da", padding: "0.375rem 0.75rem" }}>
+                  {taskData.project?.projectName || "No project selected"}
+                </span>
+              </Col>
+            </div>
+
+            <div className="priority m-1 row">
+              <Col md={3}>
+                <h6 className="mt-1">Priority</h6>
+              </Col>
+              <Col md={9}>
+                <div className="btn-group">
+                  <button
+                    type="button"
+                    className={`btn ${selectedPriority === "High" ? "btn-danger" : ""}`}
+                    onClick={() => setSelectedPriority("High")}
+                    style={{ color: "#fff" }}
+                  >
+                    High priority
+                  </button>
+                  <button
+                    type="button"
+                    className={`btn ${selectedPriority === "Low" ? "btn-info" : ""}`}
+                    onClick={() => setSelectedPriority("Low")}
+                    style={{ color: "#fff" }}
+                  >
+                    Low priority
+                  </button>
+                </div>
+              </Col>
+            </div>
+          </Col>
+        </Modal.Body>
+        <Modal.Footer style={{ backgroundColor: "#020817", color: "#fff" }}>
+          <button className="btn btn-secondary m-1" onClick={handleClose}>
+            Cancel
+          </button>
+          <button
+            className="btn"
+            type="submit"
+            style={{ backgroundColor: "#0b5ed7", color: "#fff" }}
+          >
+            Save Task
+          </button>
+        </Modal.Footer>
+      </form>
+    </Modal>
+    </>
   );
 }
 

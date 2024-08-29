@@ -61,6 +61,10 @@ function ViewTask() {
 
       if (response.ok) {
 
+
+
+
+
         setTimeout(() => navigate(`/pma/tasks`), 2000);
       } else {
         toast.error("Failed to delete task.");
@@ -79,71 +83,96 @@ function ViewTask() {
 
   return (
     <>
+
       <div className="mode-user">
-        <Sidebar />
-        <div className="main-content">
-          <TopBar />
-          <div className="container mt-4">
-            <Card className="shadow-sm" style={{ backgroundColor: "#020817", color: "#fff" }}>
-              <Card.Header className=" text-light" style={{ backgroundColor: "#0b5ed7", color: "#fff" }}>
-                <h4>Task Details</h4>
-              </Card.Header>
-              <Card.Body>
-                <div className="task-details">
-                  <h5 className="fw-bold mb-3">Task Name: <span>{task.taskName}</span></h5>
-                  <hr className="my-4" />
-                  <p className="mb-4"><strong>Description:</strong> {task.description}</p>
-                  <hr className="my-4" />
-                  <div className="mb-4">
-                    <strong>Status:</strong> <Badge pill bg={task.status === "Completed" ? "success" : "warning"}>{task.status}</Badge>
-                    <hr className="my-4" />
-                  </div>
-                  <div className="mb-4">
-                    <strong>Priority:</strong> <Badge pill bg={task.priority === "High" ? "danger" : "info"}>{task.priority}</Badge>
-                    <hr className="my-4" />
-                  </div>
-                </div>
-                <h6 className="fw-bold mb-3">Associated Project</h6>
-
-                {task.project ? (
-                  <div className="list-group">
-                    <p className="mb-2"><strong>Project Name:</strong> {task.project.projectName}</p>
-
-                    <p className="mb-0"><strong>Status:</strong> <Badge pill bg={task.project.status === "Active" ? "success" : "secondary"}>{task.project.status}</Badge></p>
-                  </div>
-                ) : (
-                  <p className="mb-0">No project associated with this task.</p>
-                )}
-                <div className="mt-4">
-                  <hr className="my-4" />
-                  <Button variant="primary" className="me-2" onClick={handleEditClick}>Edit Task</Button>
-                  <Button variant="danger" onClick={() => setDeleteModal(true)}>Delete Task</Button>
-                </div>
-              </Card.Body>
-            </Card>
-            <Modal style={{ backgroundColor: "#020817" }} show={deleteModal} onHide={() => setDeleteModal(false)}>
-              <Modal.Header style={{ backgroundColor: "#020817", color: "#fff" }} closeButton>
-                <Modal.Title style={{ backgroundColor: "#020817", color: "#fff" }} >Confirm Delete</Modal.Title>
-              </Modal.Header>
-              <Modal.Body style={{ backgroundColor: "#020817", color: "#fff" }} >Are you sure you want to delete this task?</Modal.Body>
-              <Modal.Footer style={{ backgroundColor: "#020817", color: "#fff" }} >
-                <Button variant="secondary" onClick={() => setDeleteModal(false)}>Cancel</Button>
-                <Button style={{ backgroundColor: "#0b5ed7", color: "#fff" }} onClick={deleteTask}>Delete</Button>
-              </Modal.Footer>
-            </Modal>
-            <EditTask
-              show={showEditModal}
-              handleClose={handleEditModalClose}
-              taskData={taskData}
-              setTaskData={setTaskData}
-              setAddSuccess={(msg) => toast.success(msg)}
-            />
+  <Sidebar />
+  <div className="main-content">
+    <TopBar />
+    <div className="container mt-4">
+      <Card className="shadow-sm" style={{ backgroundColor: "#020817", color: "#fff" }}>
+        <Card.Header className="text-light" style={{ backgroundColor: "#0b5ed7", color: "#fff" }}>
+          <h4>Task Details</h4>
+        </Card.Header>
+        <Card.Body>
+          <div className="task-details">
+            <h5 className="fw-bold mb-3">
+              Task Name: <span>{task.taskName}</span>
+            </h5>
+            <hr className="my-4" />
+            <p className="mb-4">
+              <strong>Description:</strong> {task.description}
+            </p>
+            <hr className="my-4" />
+            <div className="mb-4">
+              <strong>Status:</strong>{" "}
+              <Badge pill bg={task.status === "Completed" ? "success" : "warning"}>
+                {task.status}
+              </Badge>
+            </div>
+            <hr className="my-4" />
+            <div className="mb-4">
+              <strong>Priority:</strong>{" "}
+              <Badge pill bg={task.priority === "High" ? "danger" : "info"}>
+                {task.priority}
+              </Badge>
+            </div>
+            <hr className="my-4" />
+            <h6 className="fw-bold mb-3">Associated Project</h6>
+            {task.project ? (
+              <div className="list-group">
+                <p className="mb-2">
+                  <strong>Project Name:</strong> {task.project.projectName}
+                </p>
+                <p className="mb-0">
+                  <strong>Status:</strong>{" "}
+                  <Badge pill bg={task.project.status === "Active" ? "success" : "secondary"}>
+                    {task.project.status}
+                  </Badge>
+                </p>
+              </div>
+            ) : (
+              <p className="mb-0">No project associated with this task.</p>
+            )}
+            <div className="mt-4">
+              <hr className="my-4" />
+              <Button variant="primary" className="me-2" onClick={handleEditClick}>
+                Edit Task
+              </Button>
+              <Button variant="danger" onClick={() => setDeleteModal(true)}>
+                Delete Task
+              </Button>
+            </div>
           </div>
-          <ToastContainer />
-        </div>
-      </div>
-    </>
-  );
+        </Card.Body>
+      </Card>
+      <Modal style={{ backgroundColor: "#020817" }} show={deleteModal} onHide={() => setDeleteModal(false)}>
+        <Modal.Header style={{ backgroundColor: "#020817", color: "#fff" }} closeButton>
+          <Modal.Title>Confirm Delete</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete this task?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setDeleteModal(false)}>
+            Cancel
+          </Button>
+          <Button style={{ backgroundColor: "#0b5ed7", color: "#fff" }} onClick={deleteTask}>
+            Delete
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      <EditTask
+        show={showEditModal}
+        handleClose={handleEditModalClose}
+        taskData={taskData}
+        setTaskData={setTaskData}
+        setAddSuccess={(msg) => toast.success(msg)}
+      />
+      <ToastContainer />
+    </div>
+  </div>
+</div>
+
+        </>
+        );
 }
 
-export default ViewTask;
+        export default ViewTask;
