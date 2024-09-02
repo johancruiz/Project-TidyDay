@@ -958,13 +958,19 @@ textarea {
 
 
 
-.mode-user .search  .search-button
 
 
- 
+
+
 .mode-user body {
   background-color: #ffffff !important;
 }
+
+.card-body {
+  max-height: 400px; /* Ajusta la altura máxima según tu necesidad */
+  overflow-y: auto; /* Agrega un scroll vertical cuando el contenido exceda la altura */
+}
+
 
 .mode-user .logo {
   height: 5em;
@@ -1080,6 +1086,8 @@ textarea {
   text-align: center;
 }
 
+.mode-user #color_carts
+
 .mode-user .projects-buttons input:focus {
   border: none;
   outline: 1px solid #3174ad;
@@ -1156,6 +1164,7 @@ textarea {
   border-radius: 15px;
   max-height: 300px; /* Ajusta la altura máxima según tu necesidad */
   overflow-y: auto; /* Agrega un scroll vertical cuando el contenido exceda la altura */
+  scrollbar-width: none;
 }
 
 .mode-user #color_sidebar {
@@ -1272,7 +1281,7 @@ textarea {
   text-align: right;
 }
 
-.mode-user #color_carts 
+
 
 
 .mode-user .create .btn {
