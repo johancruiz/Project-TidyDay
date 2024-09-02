@@ -1154,6 +1154,8 @@ textarea {
   color: #fff;
   border: 1px solid #1e293b;
   border-radius: 15px;
+  max-height: 300px; /* Ajusta la altura máxima según tu necesidad */
+  overflow-y: auto; /* Agrega un scroll vertical cuando el contenido exceda la altura */
 }
 
 .mode-user #color_sidebar {
@@ -1269,6 +1271,9 @@ textarea {
 .mode-user .create {
   text-align: right;
 }
+
+.mode-user #color_carts 
+
 
 .mode-user .create .btn {
   background-color: #7c7c7c;

@@ -103,8 +103,10 @@ function Home() {
 										</div>
 									</div>
 								</div>
+
+
 								<div className="col-lg-7">
-									<div className="card mb-1" id="color_carts">
+									<div className="card mb-1">
 										<div className="card-body" id="color_carts">
 											<h6 className="fw-bold">Tasks</h6>
 											{tasks.length > 0 ? (
@@ -149,6 +151,8 @@ function Home() {
 										</div>
 									</div>
 								</div>
+
+
 							</div>
 						</div>
 						<div className="second mt-2">
