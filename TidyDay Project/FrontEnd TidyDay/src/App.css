@@ -969,6 +969,8 @@ textarea {
 .card-body {
   max-height: 400px; /* Ajusta la altura máxima según tu necesidad */
   overflow-y: auto; /* Agrega un scroll vertical cuando el contenido exceda la altura */
+  scrollbar-width: none;
+  
 }
 
 
@@ -1045,6 +1047,73 @@ textarea {
   }
 }
 
+/* src/Components/SignUp.css */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.spinner {
+  width: 5rem; /* Tamaño del spinner */
+  height: 5rem; /* Tamaño del spinner */
+  border: 8px solid rgba(255, 255, 255, 0.1); /* Fondo del spinner */
+  border-radius: 50%;
+  border-top: 8px solid #007bff; /* Color del spinner */
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.blurred {
+  filter: blur(5px);
+}
+
+
+.spinner-bouncing-balls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner-bouncing-balls div {
+  width: 1rem;
+  height: 1rem;
+  margin: 0 0.5rem;
+  border-radius: 50%;
+  background-color: #007bff;
+  animation: bounce 1.2s infinite ease-in-out;
+}
+
+.spinner-bouncing-balls div:nth-child(2) {
+  animation-delay: -0.2s;
+}
+
+.spinner-bouncing-balls div:nth-child(3) {
+  animation-delay: -0.4s;
+}
+
+@keyframes bounce {
+  0%, 100% {
+      transform: translateY(0);
+  }
+  50% {
+      transform: translateY(-1rem);
+  }
+}
+
+
+
 .mode-user .signup {
   background: linear-gradient(to right, #16b9c3, #ff007f);
   border: 1px solid #16b9c3 !important;
@@ -1053,7 +1122,8 @@ textarea {
   color: white !important;
   font-size: 20px !important;
   font-weight: 600 !important;
-  padding: 10px !important;
+  padding: 10px !important; 
+  padding-right: 20px;
   /* width: 30%; */
 }
 
@@ -1068,6 +1138,8 @@ textarea {
   border-radius: 2px;
   /* Mantén el borde redondeado */
 }
+
+
 
 .mode-user .project-name-input:focus {
   border-bottom: 1px solid #31d2f2;
@@ -1086,7 +1158,7 @@ textarea {
   text-align: center;
 }
 
-.mode-user #color_carts
+
 
 .mode-user .projects-buttons input:focus {
   border: none;
@@ -1165,6 +1237,20 @@ textarea {
   max-height: 300px; /* Ajusta la altura máxima según tu necesidad */
   overflow-y: auto; /* Agrega un scroll vertical cuando el contenido exceda la altura */
   scrollbar-width: none;
+  height: 95%;
+  
+}
+.mode-user #color_carts1 {
+  background-color: #020817;
+  color: #fff;
+  border: 1px solid #1e293b;
+  border-radius: 15px;
+  max-height: 300px; /* Ajusta la altura máxima según tu necesidad */
+  overflow-y: auto; /* Agrega un scroll vertical cuando el contenido exceda la altura */
+  scrollbar-width: none;
+  height: 95%;
+  width: 45%;
+  
 }
 
 .mode-user #color_sidebar {
@@ -1311,7 +1397,7 @@ textarea {
 }
 
 .mode-user .first .home-cards .card {
-  min-height: 15rem !important;
+  min-height: 17.5rem !important;
   max-height: 20rem !important;
 }
 

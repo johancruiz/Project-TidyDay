@@ -16,7 +16,8 @@ function Login() {
 	const navigate = useNavigate();
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [error, setError] = useState(''); // Estado para manejar el mensaje de error
+	const [error, setError] = useState('');
+	const [loading, setLoading] = useState(false); // Estado para manejar el spinner
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
@@ -29,6 +30,8 @@ function Login() {
 
 	const login = async (e) => {
 		e.preventDefault();
+		setLoading(true); // Mostrar el spinner
+
 		const formData = new URLSearchParams();
 		formData.append('email', email);
 		formData.append('password', password);
@@ -59,6 +62,8 @@ function Login() {
 		} catch (error) {
 			console.error('Error', error);
 			setError('An unexpected error occurred. Please try again later.'); // Mensaje de error general
+		} finally {
+			setLoading(false); // Ocultar el spinner
 		}
 	};
 
@@ -84,7 +89,12 @@ function Login() {
 			<div className='mode-user'>
 				<div className="login-page">
 					<section className="w-95 d-flex justify-content-center pb-4 p-4">
-						<form className="card log-in-card" onSubmit={login}>
+						{loading && (
+							<div className="overlay">
+								<div className="spinner"></div>
+							</div>
+						)}
+						<form className={`card log-in-card ${loading ? 'blurred' : ''}`} onSubmit={login}>
 							<div data-mdb-input-init className="form-outline mb-4 text-center">
 								<img src={tidyday3} alt="" className="logo" />
 							</div>
@@ -113,8 +123,7 @@ function Login() {
 								/>
 							</div>
 
-							{/* Mostrar mensaje de error */}
-							{error && <p style={{ color: 'red' }}>{error} user or password is incorrect</p>}
+							{error && <p style={{ color: 'red' }}>{error}</p>}
 
 							<small style={{ color: '#fff' }}>
 								I agree to the <a href="#">workspace customer agreement</a>,<br />
@@ -136,7 +145,7 @@ function Login() {
 							</div>
 							<div className="text-center">
 								<p style={{ color: '#fff' }}>
-									Don’t have an account? <Link to="/pma/signup">Sign up here</Link> {/* Ajustado */}
+									Don’t have an account? <Link to="/pma/signup">Sign up here</Link>
 								</p>
 							</div>
 						</form>
@@ -144,7 +153,6 @@ function Login() {
 				</div>
 			</div>
 		</>
-
 	);
 }
 

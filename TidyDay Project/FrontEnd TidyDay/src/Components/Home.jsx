@@ -208,8 +208,8 @@ function Home() {
 										</div>
 									</div>
 								</div>
-								<div className="col-lg-4" id="color_carts">
-									<div className="card mb-1" id="color_carts">
+								<div className="col-lg-4" id="color_carts1">
+									<div className="card mb-1" id="color_carts1">
 										<div className="card-body">
 											<h6 className="fw-bold">Total projects</h6>
 											<div className="py-4 mt-4 text-center">
